@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="900"
+   height="300"
+   viewBox="0 0 900 300"
+   version="1.1"
+   id="svg11"
+   sodipodi:docname="darkbaylogo.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   style="fill:none">
+  <metadata
+     id="metadata15">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1025"
+     id="namedview13"
+     showgrid="false"
+     inkscape:zoom="0.42"
+     inkscape:cx="-650.90799"
+     inkscape:cy="140.47619"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg11" />
+  <defs
+     id="defs9">
+    <linearGradient
+       id="paint0_linear"
+       x1="150"
+       y1="0"
+       x2="150"
+       y2="300"
+       gradientUnits="objectBoundingBox">
+      <stop
+         stop-color="#F50083"
+         id="stop4" />
+      <stop
+         offset="1"
+         stop-color="#720497"
+         id="stop6" />
+    </linearGradient>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       inkscape:label="Brilliance"
+       id="filter12">
+      <feColorMatrix
+         values="2 -0.5 -0.5 0 0 -0.5 2 -0.5 0 0 -0.5 -0.5 2 0 0 0 0 0 1 0 "
+         id="feColorMatrix10" />
+    </filter>
+  </defs>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:173.33332825px;line-height:1.25;font-family:Chandas;-inkscape-font-specification:Chandas;letter-spacing:0.01px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+     x="-14.285715"
+     y="305.42859"
+     id="text14"><tspan
+       sodipodi:role="line"
+       id="tspan12"
+       x="-14.285715"
+       y="305.42859"
+       style="font-size:173.33332825px;letter-spacing:5.28000307px"><tspan
+         style="fill:#f9f9f9"
+         id="tspan16">DARK</tspan><tspan
+         style="fill:#ff0540;fill-opacity:1"
+         id="tspan18">BAY</tspan></tspan></text>
+</svg>

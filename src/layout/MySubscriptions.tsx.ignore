@@ -1,0 +1,75 @@
+// import { StorefrontId } from '@darkpay/dark-types/substrate/interfaces';
+// import { isEmptyArray, newLogger } from '@darkpay/dark-utils';
+// import React, { useCallback, useMemo, useState } from 'react';
+// import useDarkdotEffect from '../api/useDarkdotEffect';
+// import { useMyAddress } from 'src/components/auth/MyAccountContext';
+// import { useSidebarCollapsed } from 'src/components/utils/SideBarCollapsedContext';
+// import { InfiniteList } from '../lists/InfiniteList';
+// import { Loading } from '../utils';
+// import { getPageOfIds } from '../utils/getIds';
+// import { useDarkdotApi } from '../utils/DarkdotApiContext';
+// import { AllStorefrontsLink } from './helpers';
+// import { buildFollowedItems } from './ListFollowingStorefronts';
+
+// const log = newLogger(MySubscriptions.name)
+
+// function MySubscriptions () {
+//   const [ followedStorefrontIds, setFollowedStorefrontsIds ] = useState<StorefrontId[]>([]);
+//   const [ loaded, setLoaded ] = useState(false);
+//   const { state: { collapsed } } = useSidebarCollapsed();
+//   const { darkdot, isApiReady } = useDarkdotApi()
+//   const myAddress = useMyAddress();
+
+//   useDarkdotEffect(({ darkdot, substrate: { api } }) => {
+//     if (!myAddress) return;
+
+//     let isSubscribe = true;
+//     let unsub: () => any;
+
+//     const subLoadStorefrontsData = async () => {
+//       setLoaded(false);
+//       const readyApi = await api;
+//       unsub = await readyApi.query.storefrontFollows.storefrontsFollowedByAccount(myAddress, async ids => {
+//         if (isSubscribe) {
+//           setFollowedStorefrontsIds(ids as unknown as StorefrontId[]);
+//           setLoaded(true);
+//         }
+//       })
+//     };
+
+//     subLoadStorefrontsData().catch(err =>
+//       log.error(`Failed to load storefronts followed by the current user. ${err}`))
+
+//     return () => {
+//       isSubscribe = false;
+//       unsub && unsub()
+//     };
+//   }, [ myAddress ]);
+
+//   const getNextPage = useCallback(async (page: number, size: number) => {
+//     if (!isApiReady) return [];
+
+//     const idsOfPage = getPageOfIds(followedStorefrontIds, { page, size } as unknown as ParsedUrlQuery)
+//     const storefrontsData = await darkdot.findPublicStorefronts(idsOfPage);
+
+//     return storefrontsData
+//   }, [ followedStorefrontIds, isApiReady ])
+
+//   if (isEmptyArray(followedStorefrontIds)) {
+//     return collapsed ? null : (
+//       <div className='text-center m-2'>
+//         <AllStorefrontsLink title='Exlore Storefronts' />
+//       </div>
+//     )
+//   }
+
+//   return useMemo(() => <InfiniteList
+//     loadMore={getNextPage}
+//     customList={({ dataSource = [] }) => {
+//       console.log('dataSource', dataSource)
+//       return loaded
+//           ? <>{buildFollowedItems(dataSource).map(renderPageLink)}</>
+//           : <div className='text-center m-2'><Loading /></div>}
+//       }
+//   />, [ followedStorefrontIds.length, myAddress ] )
+// }

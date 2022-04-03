@@ -1,0 +1,18 @@
+# docker-compose.yml
+version: "3"
+services:
+  web-ui:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    image: dappforce/darkdot-ui:latest
+    container_name: darkdot-web-ui
+    restart: on-failure
+    network_mode: "host"
+
+  nginx:
+    build: ./nginx
+    container_name: darkdot-proxy
+    image: dappforce/darkdot-proxy:latest
+    restart: on-failure
+    network_mode: "host"

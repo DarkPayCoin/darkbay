@@ -1,0 +1,46 @@
+/*-------------Font Size-----------*/
+
+$font_tiny: .75rem;
+$font_small: .875rem;
+$font_normal: 1rem;
+$font_large: 1.35rem;
+$font_big: 1.5rem;
+$font_huge: 2rem;
+
+/*----------Storefront Size-------------*/
+
+$storefront_mini: .25rem;
+$storefront_tiny: .5rem;
+$storefront_small: .75rem;
+$storefront_normal: 1rem;
+$storefront_large: 1.25rem;
+$storefront_big: 1.5rem;
+$storefront_huge: 2rem;
+
+/*-------------Colors----------*/
+
+$color_page_bg: transparent;
+$color_font_normal: #bdbdbd;
+$color_muted: #888;
+$color_link: #ff0540;
+$color_secondary: #595959;
+$color_light_border: #171717;
+$color_warn_border: #ff6000;
+$color_volcano: #d32029;
+$color_success: #52c41b;
+/*------------- Shadow --------*/
+
+$shadow: 0 0 5px 2px #eeecec !important;
+
+/*------------- Misc ----------*/
+
+/* 64px is a height of Ant Design toolbar */
+$height_top_menu: 64px;
+$border_radius_normal: 4px;
+$width_panel: 300px;
+$min_width_content: 428px;
+$max_width_content: calc(680px + #{$storefront_normal} * 2);
+
+// $font_family_title: 'PT Serif', Georgia, serif;
+// $font_family_title: 'Noto Serif', Georgia, serif;
+// $font_family_title: 'Merriweather', Georgia, serif;

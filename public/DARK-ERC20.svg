@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="svg2"
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
+   sodipodi:docname="DARK-ERC20.svg"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6">
+    <filter
+       inkscape:label="Apparition"
+       inkscape:menu="Blurs"
+       inkscape:menu-tooltip="Edges are partly feathered out"
+       style="color-interpolation-filters:sRGB;"
+       id="filter1553">
+      <feMorphology
+         radius="4"
+         in="SourceGraphic"
+         result="result0"
+         id="feMorphology1547" />
+      <feGaussianBlur
+         in="result0"
+         stdDeviation="8"
+         result="result91"
+         id="feGaussianBlur1549" />
+      <feComposite
+         operator="in"
+         in="SourceGraphic"
+         in2="result91"
+         id="feComposite1551" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       inkscape:label="Brilliance"
+       id="filter12">
+      <feColorMatrix
+         values="2 -0.5 -0.5 0 0 -0.5 2 -0.5 0 0 -0.5 -0.5 2 0 0 0 0 0 1 0 "
+         id="feColorMatrix10" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1025"
+     id="namedview4"
+     showgrid="false"
+     inkscape:zoom="9.8"
+     inkscape:cx="16.813559"
+     inkscape:cy="12.351557"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <image
+     width="32"
+     height="32"
+     preserveAspectRatio="none"
+     xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAA3NJREFU
+WIW1l02LVEcUhp+q+yEes4iLBEGRZJONBCQqCZKNOwkDI2pI1iE/IOv8gCySTRbJTnDjIllEGDAf
+EEcSRgdkxkS0F6KgwUQyOIomGQ/R6bqVRdWdud19e+rOdHyh6aaqzjlvnzr1Vh1DAiJiAKOqVWPs
+ZeBFwAEZ8FhV7zfmLeBV1af8m9SChtODwDSwCzgQv1eBAlgCrsTvGVVd7Oo3SUBE9gMfA+8AOzr4
+fAJ8B3yiqlc3TUBEjKp6EdkBfA582CHoOJwCPlLVJ7XfJIFIYh9wGjg0QfAaC8AHqtprm2zLwH7g
+HLCb9SLbKmr7e8BU25YMEBCRXcBlYO8EQcfhLvCmqi41B+3Qoi9i8Ir/F1X0++XwhI1nFhE5CZwY
+Q2xS1P6Oi8i7MZ6FuAUikgPztBSdAZJqMgZjbBeAw6raB8jj4HttwT3wDDMRgQI/XOmHgPeBM00C
+U8PGfWCPqdhn+/y7BRI2Br9W5Sx5SzE4PbVGQEReAd5uc/DYG163jr3W83STDLYb6DnLRW/axOaw
+iLyqqncs8BKws43AXxjO9rfxjw8Zedbx44GHHmZciWLW0tzAzhgXC7xG0Pj+8KoSuO0t8y6npNvN
+5QnKM9cv+N1nlKNL+sALMS4W2ggGmLjggiu57W2bsxEUwK3K8nNVkOM3qp2sJrAhMmAFwwVXUCUM
+csIWnHcFT9tTPwJL0Oux8ECJ53qVc9nlFLTrgokE5lzODZ+xLX1uXE3gJrBCcis8P7mCZW+GjxQQ
+Uv+Ht8y5snW+gTzGu1kTuA88StEtgQcYZuNWNK9IQ6isH13B3xgykur5CFgGsKr6G3ApRQDCv1yo
+CnpVNpCuHFh0GderjLKbZM2r6h1Yr6lvu1gFbff84EpWCFkogQfeMOtKDJ0fD+fqHzWBrwiXxIbw
+MeCSt8y6Yq0gz7uSh4zI7TgsAl+vERARG2+mz7rZB42/5ApuVZYbVcZCTH1Htf5UVVcHruMaIvIN
+cBySR55VwmW1Cix7m0p97e+sqp5oTmz5SVZXfq2WHXAXeEtV/2wODtjG99o04REJG4hUrfmJ4LX9
+PWB6OPgIgUjiKnCUUJSTvIiJ9ovA0XFNygiB2ED0gCOExmISnAKOqGov9pgjeF6t2feE1uzX1OLN
+NqfHCE3pG4w2p7+w3pwmNaUzgefdnv8HzSNP9zOU2rYAAAAASUVORK5CYII=
+"
+     id="image10"
+     x="0"
+     y="0"
+     style="opacity:0" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Layer 1">
+    <g
+       id="Layer_x0020_1"
+       transform="matrix(0.02714971,0,0,0.0246305,5.2776928,0.27439025)"
+       style="filter:url(#filter1553)">
+      <metadata
+         id="CorelCorpID_0Corel-Layer" />
+      <g
+         id="_1421394342400">
+        <g
+           id="g913">
+          <polygon
+             points="392.07,0 383.5,29.11 383.5,873.74 392.07,882.29 784.13,650.54 "
+             id="polygon901"
+             style="fill:#343434;fill-rule:nonzero" />
+          <polygon
+             points="392.07,882.29 392.07,472.33 392.07,0 0,650.54 "
+             id="polygon903"
+             style="fill:#8c8c8c;fill-rule:nonzero" />
+          <polygon
+             points="392.07,956.52 387.24,962.41 387.24,1263.28 392.07,1277.38 784.37,724.89 "
+             id="polygon905"
+             style="fill:#3c3c3b;fill-rule:nonzero" />
+          <polygon
+             points="392.07,1277.38 392.07,956.52 0,724.89 "
+             id="polygon907"
+             style="fill:#8c8c8c;fill-rule:nonzero" />
+          <polygon
+             points="392.07,882.29 784.13,650.54 392.07,472.33 "
+             id="polygon909"
+             style="fill:#141414;fill-rule:nonzero" />
+          <polygon
+             points="0,650.54 392.07,882.29 392.07,472.33 "
+             id="polygon911"
+             style="fill:#393939;fill-rule:nonzero" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

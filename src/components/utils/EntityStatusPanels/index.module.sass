@@ -1,0 +1,45 @@
+@import 'src/styles/darkdot-vars.scss'
+
+$_padding: $storefront_normal
+$_border: 1px solid $color_warn_border
+
+.DfEntityStatus
+  display: block
+  margin-bottom: $storefront_normal
+
+  \:global .ant-btn
+    background-color: transparent
+    margin-left: $storefront_tiny
+
+.DfEntityStatusOnPage
+  padding-top: $_padding
+  padding-bottom: $_padding
+  border: $_border
+  border-radius: $border_radius_normal
+
+  \:global .ant-alert-icon
+    margin-top: $storefront_tiny
+
+.RadiusesForPreview
+  border-top-left-radius: $border_radius_normal
+  border-top-right-radius: $border_radius_normal
+
+.SpacingForPreview
+  margin: -$storefront_normal
+  margin-bottom: $storefront_normal
+
+.DfEntityStatusInPreview
+  @extend .SpacingForPreview
+  @extend .RadiusesForPreview
+  border-bottom: $_border
+
+.DfEntityStatusGroup
+  @extend .SpacingForPreview
+
+  .DfEntityStatusInPreview
+    margin: 0
+    border-radius: 0
+    border-bottom: $_border
+
+    &:first-child
+      @extend .RadiusesForPreview

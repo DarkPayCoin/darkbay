@@ -1,0 +1,290 @@
+@import './darkdot-vars.scss';
+
+.DfBrand.mobile {
+  zoom: 1;
+    img {
+      max-width: 36px;
+    }
+}
+
+.ant-tabs {
+  overflow: initial;
+}
+
+.item.header.disabled {
+  margin: 0;
+
+  span {
+    width: 3rem;
+    overflow: hidden;
+  }
+}
+
+.am-drawer-draghandle {
+  background-color: initial;
+}
+
+.infinite-scroll-component {
+  overflow: initial !important;
+}
+
+.DfModal:first-child {
+  margin: $storefront_mini;
+  padding: $storefront_mini !important;
+}
+
+.DfModal {
+  margin: $storefront_big $storefront_mini;
+  padding: $storefront_normal $storefront_mini $storefront_mini $storefront_mini;
+  border-top: 1px solid $color_light_border;
+
+  .DfContent {
+    padding: 0;
+  }
+
+  .DfDescription {
+    font-size: $font_normal;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .MobilePageContent {
+    margin-bottom: 64px;
+  }
+
+  .DfSideBar {
+    .ant-drawer-content-wrapper {
+      width: 225px !important;
+    }
+  }
+
+  .DfEntireProduct {
+    .DfProductContent {
+      padding: $storefront_small;
+      margin-top: $storefront_normal;
+      // border-radius: 0;
+    }
+
+    .DfInfoPanel {
+      display: block;
+    }
+
+    .DfStorefrontPreviewOnProductPage > .DfSegment {
+      padding: $storefront_small;
+    }
+  }
+
+  .DfSectionOuter {
+    width: 100%;
+  }
+
+  .item.header.disabled {
+    zoom: 0.8;
+  }
+
+  .ui.search.selection.dropdown {
+    min-width: 18rem;
+  }
+
+  .editor-toolbar {
+    zoom: .7;
+  }
+
+  .ProfilePreviews {
+
+    button.ui.tiny {
+      padding: .6rem;
+      font-size: $font_tiny;
+    }
+  }
+
+  li.ant-list-item.ant-list-item-no-flex {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-bottom: $storefront_small;
+  }
+
+  .infinite-scroll-component {
+    .DfSegment {
+      margin-top: $storefront_small;
+    }
+  }
+
+  .DfModal:first-child {
+    margin: $storefront_mini;
+    padding: $storefront_mini !important;
+  }
+
+  .DfModal {
+    margin: $storefront_tiny $storefront_mini;
+    padding: $storefront_normal $storefront_mini $storefront_mini $storefront_mini !important;
+    border-top: $storefront_small solid $color_light_border;
+
+    .DfContent {
+      padding: 0;
+    }
+
+    .DfDescription {
+      font-size: $font_normal;
+    }
+  }
+
+  .DfAddressMini-popup {
+    line-height: 1rem;
+    font-size: 1rem !important;
+
+    .header {
+      font-size: 1rem !important;
+    }
+  }
+
+  .Df--AddressComponents-details {
+    margin-top: .25rem;
+  }
+
+  .DfPageContent {
+    min-width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 $storefront_normal;
+  }
+
+  .DfBurgerIcon {
+    padding-left: 0;
+    padding-right: $storefront_tiny;
+  }
+
+  .DfSection {
+    margin-top: $storefront_big !important;
+
+    .DfSection-title {
+      margin: 0;
+      margin-top: $storefront_normal;
+      padding: 0;
+
+      .DfTitle--List {
+        margin-bottom: $storefront_mini
+      }
+    }
+  }
+
+  .ProfileDetails {
+    .content {
+      padding: 0 $storefront_tiny;
+    }
+  }
+
+  .DfCommentSection {
+    .DfDataList {
+      margin: initial;
+    }
+
+    .DfCommentAction {
+      padding: $storefront_tiny;
+    }
+  }
+
+  .DfContent,
+  .content {
+    text-align: left !important;
+  }
+
+  .content {
+    width: 80%;
+    line-height: $storefront_big;
+  }
+
+  .header {
+    line-height: normal;
+    font-size: $font_large !important;
+    font-weight: 500;
+  }
+
+  .header.DfProductTitle--preview {
+    margin: $storefront_tiny 0;
+  }
+
+  .DfProductPreview {
+    &h2 {
+      margin-top: 0;
+      font-size: $font_large;
+    }
+    &.DfSegment {
+      padding-bottom: 0 !important;
+    }
+    .DfProductImagePreview {
+      margin-left: 0 !important;
+    }
+  }
+
+  .DfStorefrontStats {
+    .DfStatItem {
+      margin-right: $storefront_tiny;
+    }
+  }
+
+  .DfSegment {
+    z-index: 1;
+    border-radius: 0;
+    margin-left: -$storefront_normal;
+    margin-right: -$storefront_normal;
+    padding: $storefront_small;
+    border-left: 0;
+    border-right: 0;
+    box-shadow: none;
+
+    .DfSegment {
+      margin: 0;
+    }
+  }
+
+  .ui--Status {
+    zoom: .7;
+    max-width: 50%;
+  }
+
+  .DfProductName {
+    font-size: $font_big;
+    margin-bottom: $storefront_normal !important;
+    width: 87%;
+  }
+
+  .DfContentPage {
+    text-align: left !important;
+
+    .FullProfile {
+      margin-top: $storefront_mini !important;
+    }
+  }
+
+  .DfCountsPreview .MutedText {
+    margin-right: $storefront_normal;
+
+    .disable {
+      margin: 0;
+    }
+  }
+
+  .ui--IdentityIcon.image {
+    margin-right: $storefront_tiny;
+  }
+
+  .DfDataList {
+    margin: 0 -$storefront_normal;
+  }
+
+  .DfSearch {
+    width: 100%;
+  }
+
+  .DfSocialLinks {
+    margin-top: $storefront_mini;
+    font-size: $font_normal;
+  }
+
+  .DfTags {
+    .ant-tag {
+      padding: .15rem .4rem;
+    }
+  }
+}
