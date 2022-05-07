@@ -2,21 +2,15 @@ import React, { useMemo } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
 
-import { Networks, shorter, TOKENS_BY_NETWORK } from './utils'
+import { Networks, TOKENS_BY_NETWORK } from './utils'
 import fetcher from 'swr-eth'
 import { SWRConfig } from 'swr'
-import ERC20ABI from './abi/ERC20.abi.json'
-import { EthBalance } from './EthBalance'
 import { TokenList } from './TokenList'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { useEagerConnect } from './hooks/useEagerConnect'
 import { useInactiveListener } from './hooks/useInactiveListener'
-import { Card } from 'antd'
 import Section from '../utils/Section'
-import { SafetyOutlined, SubnodeOutlined } from '@ant-design/icons'
-import AuthorizationPanel from '../auth/AuthorizationPanel'
-import { SignInMobileStub } from '../auth/AuthButtons'
-import { isMobileDevice } from 'src/config/Size.config'
+import { SubnodeOutlined } from '@ant-design/icons'
 
 export const injectedConnector = new InjectedConnector({
   supportedChainIds: [
@@ -31,7 +25,6 @@ export const injectedConnector = new InjectedConnector({
 export const Wallet = () => {
   const {
     chainId,
-    account,
     library,
     activate,
     active,

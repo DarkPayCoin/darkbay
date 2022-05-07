@@ -12,7 +12,6 @@ import { isMyAddress } from '../../auth/MyAccountContext';
 import { Product, Storefront, ProductExtension, ProductId } from '@darkpay/dark-types/substrate/interfaces';
 import { StorefrontData, ProductWithSomeDetails, ProductWithAllDetails, ProductData } from '@darkpay/dark-types/dto';
 import { ProductContent as ProductContentType } from '@darkpay/dark-types';
-import ViewTags from '../../utils/ViewTags';
 import AuthorPreview from '../../profiles/address-views/AuthorPreview';
 import SummarizeMd from '../../utils/md/SummarizeMd';
 import ViewProductLink from '../ViewProductLink';
@@ -32,7 +31,6 @@ import { productUrl, editProductUrl, HasStorefrontIdOrHandle, HasProductId } fro
 import { ShareDropdown } from '../share/ShareDropdown';
 import { ButtonLink } from 'src/components/utils/ButtonLink';
 import { DfMd } from 'src/components/utils/DfMd';
-import { KusamaProposalView, ProposerTag } from 'src/components/kusama/KusamaProposalDesc';
 import { EntityStatusProps, HiddenEntityPanel } from 'src/components/utils/EntityStatusPanels';
 import MoveProductLink from '../MoveProductLink';
 import ProductPriceToDark from './ProductPriceToDark';
@@ -153,7 +151,7 @@ type ProductCreatorProps = {
 
 export const ProductCreator: React.FunctionComponent<ProductCreatorProps> = ({ productDetails, size, withStorefrontName, storefront }) => {
   if (isEmpty(productDetails.product)) return null;
-  const { product: { struct, content }, owner } = productDetails;
+  const { product: { struct  }, owner } = productDetails;
   const { created: { time }, owner: productOwnerAddress } = struct;
 
   // TODO replace on loaded storefront after refactor this components
@@ -189,7 +187,7 @@ type ProductImageProps = {
 }
 
 const ProductImage = ({ product: { content, struct }, storefront }: ProductImageProps) => {
-  const isMobile = useIsMobileWidthOrDevice()
+  // const isMobile = useIsMobileWidthOrDevice()
   const image = content?.image
 
   if (!image || isEmptyStr(image)) return null
@@ -319,8 +317,7 @@ export const ShareProductContent = (props: ProductPreviewProps) => {
 export const InfoProductPreview: React.FunctionComponent<ProductPreviewProps> = (props) => {
   // const { productDetails, storefront, withImage = true, withTags } = props
   // const { product: { struct, content } } = productDetails
-  const { productDetails, storefront, withImage } = props
-  const isMobile = useIsMobileWidthOrDevice()
+  const { productDetails, storefront } = props
 
   if (!productDetails) return null
 

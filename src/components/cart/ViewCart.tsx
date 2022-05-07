@@ -3,11 +3,9 @@ import { notification } from "antd";
 import React from "react";
 import { useCart } from "react-use-cart";
 import { resolveIpfsUrl } from "src/ipfs";
-import { PageContent } from "../main/PageWrapper";
 import ButtonLink from "../utils/ButtonLink";
-import Section from "../utils/Section";
 import CartPriceToDark from './CartPriceToDark';
-import EmptyCart from './EmptyCart';
+import { EmptyCart } from "./EmptyCart";
 
 type ViewCartProps = {
 
@@ -110,14 +108,14 @@ const groupBy = (array: any[], key: string) => {
 
 
     // if empty cart
-   // if (isEmpty) return <EmptyCart />
+    if (isEmpty) return <EmptyCart />
 
     // cart
     return (
         <>
     <div id="viewcart">
     <h1 className="PageTitle flex-center">My cart</h1>
-<div className="fullFlex">
+
             <table className='ant-table view-cart-table'>
                 <thead className='ant-table-thead'>
                     <tr>
@@ -181,9 +179,9 @@ const groupBy = (array: any[], key: string) => {
                 ))}
                 </tbody>
             </table>
-            </div>
+
             
-            <div className="fullFlex">
+
             <div className="cart-totals">
               <table className='ant-table view-cart-total'>
                 <thead className='ant-table-thead'></thead>
@@ -239,7 +237,7 @@ const groupBy = (array: any[], key: string) => {
                 
           
   
-            </div></div>
+            </div>
      
         </>
     );

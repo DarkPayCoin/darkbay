@@ -4,7 +4,7 @@ import { mdToText, summarize } from 'src/utils'
 import { useIsMobileWidthOrDevice } from 'src/components/responsive'
 
 const MOBILE_SUMMARY_LEN = 120
-const DESKTOP_SUMMARY_LEN = 220
+const DESKTOP_SUMMARY_LEN = 120
 
 type Props = {
   md?: string

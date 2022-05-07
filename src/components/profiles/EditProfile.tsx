@@ -117,6 +117,7 @@ export function InnerForm (props: FormProps) {
   }
 
   return <>
+
     <DfForm form={form} initialValues={initialValues}>
 
       <Form.Item
@@ -166,6 +167,7 @@ export function InnerForm (props: FormProps) {
         }}
       />
     </DfForm>
+
   </>
 }
 
@@ -179,9 +181,7 @@ export function FormInSection (props: FormProps) {
 
   return <>
     <HeadMeta title={title} />
-    <Section className='EditEntityBox' title={title}>
       <InnerForm {...props} />
-    </Section>
   </>
 }
 

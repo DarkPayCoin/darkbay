@@ -8,7 +8,7 @@ import dynamic from 'next/dynamic';
 import Error from 'next/error';
 import React, { useCallback } from 'react';
 import { Segment } from 'src/components/utils/Segment';
-import { formatUnixDate, isHidden, resolveBn } from '../utils';
+import { isHidden, resolveBn } from '../utils';
 import { HeadMeta } from '../utils/HeadMeta';
 import { SummarizeMd } from '../utils/md';
 import MyEntityLabel from '../utils/MyEntityLabel';
@@ -30,11 +30,8 @@ import { BareProps } from '../utils/types';
 import { getPageOfIds } from '../utils/getIds';
 import { editStorefrontUrl } from '../urls';
 import ButtonLink from '../utils/ButtonLink';
-import { EditOutlined, KeyOutlined, NodeIndexOutlined, ShopOutlined } from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 import { EntityStatusGroup, PendingStorefrontOwnershipPanel } from '../utils/EntityStatusPanels';
-import { AuthorPreview } from '../profiles/address-views';
-import { ProfileData, StorefrontData } from '@darkpay/dark-types';
-import { GlobalOutlined } from '@ant-design/icons'
 
 
 
@@ -123,7 +120,7 @@ export const ViewStorefront = (props: Props) => {
   );
 
   
-  const { created: { time }, owner: storefrontOwnerAddress } = storefront;
+  // const { created: { time }, owner: storefrontOwnerAddress } = storefront;
 
   const renderPreview = () =>
     <div className={primaryClass}>

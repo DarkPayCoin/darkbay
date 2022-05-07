@@ -25,7 +25,7 @@ type Props = {
 }
 
 const LatestUpdate = (props: Props) => {
-  const { storefrontsData, productsData, commentData } = props;
+  const { storefrontsData, productsData } = props;
 
   return (
     <PageContent>
@@ -33,11 +33,11 @@ const LatestUpdate = (props: Props) => {
         title='Latest products and storefronts'
         desc='Darkdot is an open decentralized e-commerce network'
       />
-      <div className='fullFlex'>
+
       <LatestProducts {...props} productsData={productsData} type='product' />
       {/* <LatestProducts {...props} productsData={commentData} type='comment' /> */}
       <LatestStorefronts {...props} storefrontsData={storefrontsData} />
-      </div>
+
     </PageContent>
   )
 }

@@ -1,13 +1,10 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { DfMd } from '../../utils/DfMd';
 import { HeadMeta } from '../../utils/HeadMeta';
-import Section from '../../utils/Section';
 import { ProductData, ProductWithAllDetails } from '@darkpay/dark-types/dto';
-import ViewTags from '../../utils/ViewTags';
 import ViewProductLink from '../ViewProductLink';
 import { CommentSection } from '../../comments/CommentsSection';
-import { ProductDropDownMenu, ProductCreator, HiddenProductAlert, ProductNotFound, ProductActionsPanel, isComment, ShareProductContent, useSubscribedProduct } from './helpers';
+import { ProductDropDownMenu, ProductCreator, HiddenProductAlert, ProductNotFound, ProductActionsPanel, isComment, useSubscribedProduct } from './helpers';
 import Error from 'next/error'
 import { NextPage } from 'next';
 import { getDarkdotApi } from 'src/components/utils/DarkdotConnect';
@@ -25,9 +22,7 @@ import { ViewStorefront } from 'src/components/storefronts/ViewStorefront';
 const StatsPanel = dynamic(() => import('../ProductStats'), { ssr: false });
 import AddToCartWidget from '../../cart/AddToCartWidget'
 import ProductPriceToDark from './ProductPriceToDark';
-import ViewShipCountries from 'src/components/utils/ViewShipCountries';
-import ViewShipCost from 'src/components/utils/ViewShipCost';
-import { Descriptions, Space } from 'antd';
+import { Descriptions } from 'antd';
 
 
 export type ProductDetailsProps = {
@@ -40,7 +35,7 @@ export const ProductPage: NextPage<ProductDetailsProps> = ({ productDetails: ini
   if (statusCode === 404) return <Error statusCode={statusCode} />
   if (!initialProduct || isHidden({ struct: initialProduct.product.struct })) return <ProductNotFound />
 
-  const { product, ext, storefront } = initialProduct
+  const { product, storefront } = initialProduct
 
   if (!storefront || isHiddenStorefront(storefront.struct)) return <ProductNotFound />
 
@@ -54,7 +49,7 @@ export const ProductPage: NextPage<ProductDetailsProps> = ({ productDetails: ini
 
   const storefrontData = storefront || productDetails.storefront || useLoadUnlistedStorefront(struct.owner).myHiddenStorefront
 
-  const { title, body, price, image, canonical, tags, shipzones } = content;
+  const { title, body, image, canonical, tags, shipzones } = content;
 
   if (!storefrontData) return <Loading />
 

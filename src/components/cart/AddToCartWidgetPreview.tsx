@@ -41,8 +41,8 @@ export const AddToCartWidgetPreview = ({
 
   const BuyerEscrow = productdetails.product.content?.bescrow
   const SellerEscrow = productdetails.product.content?.sescrow
-  const ShipCost = Number(productdetails.product.struct.ship_cost) / 100
-  const ShipsTo = productdetails.product.content?.shipsto
+  const ShipZones = productdetails.product.content?.shipzones
+// TODO : shipping zones
 
   const isMyProduct = isMyAddress(productdetails.product.struct.owner);
 
@@ -89,8 +89,7 @@ export const AddToCartWidgetPreview = ({
     "seller": ProductSeller,
     "bescrow": BuyerEscrow,
     "sescrow": SellerEscrow,
-    "shipcost": ShipCost,
-    "shipsto": ShipsTo,
+    "shipzones": ShipZones,
   }
 
 

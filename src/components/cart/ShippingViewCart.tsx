@@ -1,13 +1,8 @@
-import { DeleteOutlined, MinusCircleOutlined, NotificationOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Badge, notification } from "antd";
 import React from "react";
 import { useCart } from "react-use-cart";
 import { resolveIpfsUrl } from "src/ipfs";
-import { PageContent } from "../main/PageWrapper";
-import ButtonLink from "../utils/ButtonLink";
-import Section from "../utils/Section";
 import CartPriceToDark from './CartPriceToDark';
-import EmptyCart from './EmptyCart';
 
 type ShippingViewCartProps = {
 
@@ -17,14 +12,10 @@ export const ShippingViewCart = ({ }: ShippingViewCartProps) => {
 
 
     const {
-        isEmpty,
         cartTotal,
         items,
-        updateItemQuantity,
         updateCartMetadata,
-        removeItem,
-        emptyCart
-    } = useCart();
+        removeItem    } = useCart();
 
     // Buyer escrow total
     const totalBescrow = items

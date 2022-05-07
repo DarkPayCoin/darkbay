@@ -81,7 +81,7 @@ const dynamicSocialLinks = (): InnerFieldListFn => {
             <Form.Item
               {...field}
               name={[ field.name, 'name' ]}
-              fieldKey={[ field.fieldKey, 'name' ]}
+              fieldKey={[ field.key, 'name' ]}
               rules={[ { required: true, message: 'Should be a valid link name' } ]}
             >
               <Input placeholder="Name" />
@@ -89,7 +89,7 @@ const dynamicSocialLinks = (): InnerFieldListFn => {
             <Form.Item
               {...field}
               name={[ field.name, 'url' ]}
-              fieldKey={[ field.fieldKey, 'url' ]}
+              fieldKey={[ field.key, 'url' ]}
               rules={[
                 { required: true, message: 'Missing URL' },
                 { type: 'url', message: 'Should be a valid URL.' }

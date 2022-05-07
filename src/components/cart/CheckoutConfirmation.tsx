@@ -1,9 +1,6 @@
 import React from 'react';
 import { Result, Button } from 'antd';
 
-import { PageContent } from "../main/PageWrapper";
-
-import Section from "../utils/Section";
 
 type CheckoutConfirmationProps = {
 

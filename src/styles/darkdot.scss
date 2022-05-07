@@ -438,16 +438,18 @@ pre {
     font-size: $font_normal;
   }
   .fullFlex {
-    flex: 0 0 70%;
+    flex: 0 0 70% !important;
     align-self: center;
   }
 .EditEntityPage {
-margin: 0 auto;
-width: 50%;
+ width: 100%;
 }
 
 }
 
+.markdown-body {
+  color: #aaa;
+}
 
 #SwapCard {
   display: flex;

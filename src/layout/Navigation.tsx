@@ -53,7 +53,7 @@ export const Navigation = (props: Props): JSX.Element => {
   const { state: { asDrawer } } = useSidebarCollapsed()
 
   const content = useMemo(() =>
-    <Content className='DfPageContent'>{children}</Content>,
+    <Content className='DfPageContent fullFlex'>{children}</Content>,
     [ children ]
   )
 

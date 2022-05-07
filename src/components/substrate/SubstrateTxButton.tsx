@@ -231,8 +231,10 @@ export function TxButton ({
     try {
       unsub = await extrinsic.signAndSend(account, onSuccessHandler)
       waitMessage.open()
-    } catch (err) {
+    } catch (err: any) {
+      if (err) {
       onFailedHandler(err)
+      }
     }
   }
 
@@ -242,7 +244,7 @@ export function TxButton ({
     try {
       unsub = await extrinsic.send(onSuccessHandler)
       waitMessage.open()
-    } catch (err) {
+    } catch (err: any) {
       onFailedHandler(err)
     }
   }

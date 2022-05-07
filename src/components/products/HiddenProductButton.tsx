@@ -24,7 +24,6 @@ export function HiddenProductButton (props: HiddenProductButtonProps) {
         discount_pct: new OptionPrice(),
         buyer_esc_pct: new OptionPrice(),
         seller_esc_pct: new OptionPrice(),
-        ship_cost: new OptionPrice(),
         hidden: new OptionBool(!hidden) // TODO has no implementation on UI
       });
     return [ product.id, update ];

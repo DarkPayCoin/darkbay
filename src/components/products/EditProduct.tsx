@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import { Button, Col, Collapse, Divider, Form, InputNumber, Row, Select, Slider, Space, Tabs } from 'antd'
+import { Button, Collapse, Divider, Form, InputNumber, Select, Slider, Space, Tabs } from 'antd'
 import Router, { useRouter } from 'next/router'
 import BN from 'bn.js'
 import HeadMeta from '../utils/HeadMeta'
-import Section from '../utils/Section'
 import { getNewIdFromEvent, equalAddresses, getTxParams } from '../substrate'
 import { TxFailedCallback, TxCallback } from 'src/components/substrate/SubstrateTxButton'
-import { ProductExtension, ProductUpdate, OptionId, OptionBool, OptionIpfsContent, IpfsContent, OptionPrice, OptionOptionText} from '@darkpay/dark-types/substrate/classes'
-import { IpfsCid, Product } from '@darkpay/dark-types/substrate/interfaces'
+import { ProductExtension, ProductUpdate, OptionId, OptionBool, OptionIpfsContent, IpfsContent, OptionPrice} from '@darkpay/dark-types/substrate/classes'
+import { IpfsCid } from '@darkpay/dark-types/substrate/interfaces'
 import { ProductContent, ProductData, ProductExt } from '@darkpay/dark-types'
 import { registry } from '@darkpay/dark-types/substrate/registry'
 import { newLogger } from '@darkpay/dark-utils'
@@ -27,7 +26,6 @@ import messages from 'src/messages'
 import { PageContent } from '../main/PageWrapper'
 // import { useKusamaContext } from '../kusama/KusamaContext'
 import Input from 'antd/lib/input/Input'
-import { Countries } from '../utils/Countries'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 // import { KusamaProposalForm } from '../kusama/KusamaEditProduct'
 
@@ -98,7 +96,7 @@ export function ProductForm (props: ProductFormProps) {
   const orig_sescrow =  Number(props.product?.struct.seller_esc_pct)/100 || 50
   const orig_taxpct =   Number(props.product?.struct.tax_pct)/100 || 0
   const orig_discountpct =   Number(props.product?.struct.discount_pct)/100 || 0
-  const shipzones = initialValues.shipzones || []
+//  const shipzones = initialValues.shipzones || []
   //const orig_variations = initialValues.variations || []
 
 // alert('ORIG : ' + orig_price);
@@ -505,7 +503,6 @@ export const ProductForms = (props: ProductFormProps) => {
 export function FormInSection (props: ProductFormProps) {
   const { storefront, product } = props
 //  const { hasKusamaConnection } = useKusamaContext()
-const useKusama = false
 
   const pageTitle = product ? `Edit product` : `New product`
 

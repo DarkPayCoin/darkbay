@@ -52,7 +52,7 @@ export const AboutStorefrontPage: NextPage<Props> = (props) => {
 
   // TODO extract WithStorefrontNav
 
-  return <PageContent>
+  return <PageContent className="fullFlex">
     <HeadMeta title={title} desc={mdToText(about)} image={image} />
       <Section className='DfContentPage' level={1} title={title}>
         <div className='DfRow mt-3'>
