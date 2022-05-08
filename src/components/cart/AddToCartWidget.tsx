@@ -5,7 +5,7 @@ import { useAuth } from '../auth/AuthContext'
 import { ProductWithSomeDetails, ProductData } from '@darkpay/dark-types'
 import { ShoppingCartOutlined } from '@ant-design/icons'
 // import { ShareModal } from './ShareModal'
-import { InputNumber, notification} from 'antd';
+import { Button, InputNumber, notification} from 'antd';
 
 //import { add, total } from './localstore' 
 //import { Cart,} from './CartUtils
@@ -14,6 +14,7 @@ import { Option } from '@polkadot/types'
 import { AccountId } from '@polkadot/types/interfaces'
 // import { addShopping } from './action'
 import { useCart } from "react-use-cart";
+import { isMyAddress } from '../auth/MyAccountContext';
 
 
 
@@ -108,6 +109,8 @@ const onQtyChanged = (qty: string | number | undefined) => {
   const { inCart, addItem } = useCart();
   const cartTitle = inCart((data.id).toString()) ? 'Add more' : 'Add to cart'
 
+  const isMyProduct = isMyAddress(product.struct.owner);
+  
   return <>
 
   <div className="addtocart-price">
@@ -120,17 +123,26 @@ const onQtyChanged = (qty: string | number | undefined) => {
       onChange={onQtyChanged} 
     />
   </div>
-  <div className="addtocart-btn">
+  {/* <div className="addtocart-btn">
     <a
-      className='ant-btn ant-btn-primary addtocart'
+      className={isMyProduct ? 'disabled ant-btn ant-btn-primary addtocart' :  'ant-btn ant-btn-primary addtocart'}
       onClick={() => isSignedIn ?  addItem(data, Number(qty)) : openSignInModal('AuthRequired')}
       title={cartTitle}
     >
-      <IconWithLabel icon={<ShoppingCartOutlined />} label={cartTitle} />
-      {/* <AddToCartTotal product={product} productPrice={Number(product.struct.price)} qty={qty}  /> */}
-      {/* <TickerDarkUsd /> */}
+      <IconWithLabel icon={<ShoppingCartOutlined />} label={isMyProduct ? 'Own product' : cartTitle} />
     </a>
-  </div>
+  </div> */}
+<Button 
+  className='ant-btn ant-btn-primary addtocart'
+  onClick={() => isSignedIn ?  addItem(data, Number(qty)) : openSignInModal('AuthRequired')}
+  icon={<ShoppingCartOutlined />}
+  shape="round"
+  size="large"
+  disabled={isMyProduct ? true :  false}
+  >
+{isMyProduct ? 'Own product' : cartTitle}
+</Button>
+
 
   </>
 }

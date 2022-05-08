@@ -199,14 +199,14 @@ export const ViewStorefront = (props: Props) => {
   }
 
   return <>
-    <PageContent>
+
       <PendingStorefrontOwnershipPanel storefront={storefront} />
       <HiddenStorefrontAlert storefront={storefront} />
       <Section>{renderPreview()}</Section>
       <div className='StorefrontProducts fullFlex'>
         <ProductPreviewsOnStorefront storefrontData={storefrontData} products={products} productIds={productIds} />
       </div>
-    </PageContent>
+
   </>
 }
 

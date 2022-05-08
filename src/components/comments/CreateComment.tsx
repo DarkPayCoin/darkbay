@@ -41,7 +41,7 @@ export const NewComment: React.FunctionComponent<NewCommentProps> = ({ product, 
 
   const newExtension = new ProductExtension({ Comment: commentExt })
 
-  const newTxParams = (cid: IpfsCid) => [ new OptionId(), newExtension, new IpfsContent(cid), new OptionPrice(), new OptionPrice(), new OptionPrice(), new OptionPrice(), new OptionPrice(), new OptionPrice()  ]
+  const newTxParams = (cid: IpfsCid) => [ new OptionId(), newExtension, new IpfsContent(cid), new OptionPrice(), new OptionPrice(), new OptionPrice(), new OptionPrice(), new OptionPrice()  ]
 
   const onFailedReduxAction = (id: string) =>
     useRemoveReplyFromStore(dispatch, { replyId: id, parentId: parentIdStr })

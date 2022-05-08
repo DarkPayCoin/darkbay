@@ -303,7 +303,7 @@ pre {
 }
 
 .ProductDetails {
-  flex: 0 0 70%;
+  flex: 0 0 100%;
   background-color: rgba(34, 36, 38, .35);
   border-radius: 1rem;
   margin: 1rem 0;
@@ -311,12 +311,13 @@ pre {
 }
 
 .ProductMainInfo {
-  flex: 0 0 70%;
+  flex: 0 0 100%;
   background-color: rgba(34, 36, 38, .35);
   border-radius: 1rem;
   margin: 2rem 0;
   padding: 1.5rem;
   display: flex;
+  flex-wrap: nowrap;
 }
 
 
@@ -412,10 +413,9 @@ pre {
 }
 
 .StorefrontDetails {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+
+  flex: 0 0 100%;
+  
 }
 
 .DfStorefrontBannerFull {
@@ -449,6 +449,23 @@ pre {
 
 .markdown-body {
   color: #aaa;
+}
+
+.text-centered {
+  text-align: center;
+}
+
+.spaced-top {
+  margin-top: 3rem;
+}
+
+.padded-top {
+  padding-top: 1rem;
+}
+
+.lockAddress {
+  font-size: x-large;
+  color: $color_link;
 }
 
 #SwapCard {
@@ -1963,6 +1980,7 @@ margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  width: 100%;
 }
 
 

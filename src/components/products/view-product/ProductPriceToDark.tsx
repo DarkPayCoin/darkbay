@@ -22,8 +22,8 @@ export const ProductPriceToDark: React.FunctionComponent<ProductPriceToDarkProps
   // 1 Dark to 1 USD from Offchain
   const getAvgPrice = new Promise<number>(async (resolve, reject) => {
     const darkdot = await getDarkdotApi();
-    const { substrate } = darkdot;
-    const prices = await substrate.getPrices();
+    //const { substrate } = await darkdot;
+    const prices = await darkdot.substrate.getPrices();
 
     if (prices.length > 0) {
       var sum = 0;

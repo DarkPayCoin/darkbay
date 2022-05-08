@@ -23,6 +23,7 @@ const StatsPanel = dynamic(() => import('../ProductStats'), { ssr: false });
 import AddToCartWidget from '../../cart/AddToCartWidget'
 import ProductPriceToDark from './ProductPriceToDark';
 import { Descriptions } from 'antd';
+import { DfMd } from 'src/components/utils/DfMd';
 
 
 export type ProductDetailsProps = {
@@ -50,6 +51,8 @@ export const ProductPage: NextPage<ProductDetailsProps> = ({ productDetails: ini
   const storefrontData = storefront || productDetails.storefront || useLoadUnlistedStorefront(struct.owner).myHiddenStorefront
 
   const { title, body, image, canonical, tags, shipzones } = content;
+
+  console.warn(content)
 
   if (!storefrontData) return <Loading />
 
@@ -83,7 +86,7 @@ const productPriceView = ((product.struct.price_usd as any)/100).toFixed(2)
             <div className='menuPart'><ProductDropDownMenu productDetails={productDetails} storefront={storefrontStruct} withEditButton /></div>
 
         </div>
-        <p className='ProductBody'>{body}</p>
+        <p className='ProductBody'><DfMd className='mt-3' source={body} /></p>
         <div className='ProductPreviewPriceCart'>
         <div className='ProductPreviewPriceInfo'>
         <h3 className='fullProductViewPrice'>{productPriceView} $</h3>
