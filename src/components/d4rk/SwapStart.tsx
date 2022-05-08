@@ -19,7 +19,7 @@ export const SwapStart = ({
   data = [
     'Be sure to use an address you own from desktop or mobile wallet (no third-party service).',
     'You will be asked to sign a message as a confirmation of address ownership.',
-    'You must have a DARK (DOT) address to recieve your tokens',
+    'You must have a DARK (DOT) address to receive your tokens',
   ],
   qrFcolor = '#fff',
   qrBcolor = 'transparent'
