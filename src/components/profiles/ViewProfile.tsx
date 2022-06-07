@@ -73,7 +73,8 @@ const Component = (props: Props) => {
 
   const {
     avatar,
-    about
+    about,
+    gpg
   } = owner?.content || {} as ProfileContent;
 
   const createProfileButton = noProfile && isMyAccount &&
@@ -139,6 +140,12 @@ const Component = (props: Props) => {
                 </CopyAddress>
               },
               {
+                label: 'Dark Key',
+                value: <CopyAddress address={gpg}>
+                  <span className='DfBlackLink'>{gpg}</span>
+                </CopyAddress>
+              },
+              {
                 label: 'Balance',
                 value: <Balance address={address} />
               },
@@ -177,7 +184,8 @@ const ProfilePage: NextPage<Props> = (props) => {
   const {
     name,
     avatar,
-    about
+    about,
+    gpg
   } = owner?.content || {} as ProfileContent;
 
   const isOnlyAddress = isEmptyStr(name)

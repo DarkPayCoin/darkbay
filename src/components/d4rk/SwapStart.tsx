@@ -1,75 +1,82 @@
-import React from 'react'
-import QRCode from "react-qr-code";
+import React, {  } from 'react';
 import Button from 'antd/lib/button';
 import HeadMeta from 'src/components/utils/HeadMeta';
-import { PageContent } from '../main/PageWrapper';
-import { Alert, List, Typography } from 'antd';
+import { useMyAccount } from '../auth/MyAccountContext';
+import { useAuth } from '../auth/AuthContext';
+import Section from '../utils/Section';
+import { CreateWallet } from './utils/CreateWallet';
+
 
 type Props = {
   title?: string,
-  lockAddress?: string,
-  data?: string[],
-  qrFcolor?: string,
-  qrBcolor?: string
 }
 
 export const SwapStart = ({
-  title = 'Entering DarkBay for legacy D4RK holders',
-  lockAddress = 'DZHhbg1dYmcen7Z1yTvmEK1TXaiiPoeVmd',
-  data = [
-    'Be sure to use an address you own from desktop or mobile wallet (no third-party service).',
-    'You will be asked to sign a message as a confirmation of address ownership.',
-    'You must have a DARK (DOT) address to receive your tokens',
-  ],
-  qrFcolor = '#fff',
-  qrBcolor = 'transparent'
+  title = 'Get DARK tokens from legacy D4RK coin',
 
 }: Props) => {
-  return (
-    <PageContent>
-        <HeadMeta title={title} desc='Lock your D4RK coins and claim DARK (DOT) tokens.' />
-        
-        <h1 className='d-flex spaced-top justify-content-center'>{title}</h1>
-        <div className='DfCard mt-12 text-centered'>
-        <p>To get DARK (DOT) tokens from your legacy D4RK, send from <strong>one address you own</strong> to the lock vault account:</p>
-        <p className="lockAddress">
-            {lockAddress}
-        </p>
-        <p>
-          <QRCode 
-          value={lockAddress}
-          title="title"
-          bgColor={qrBcolor}
-          fgColor={qrFcolor}
-          level="H"
-           />
-        </p>
-      
-        <p>After sending, please wait for usual 12 network confirmations before claiming.</p>  
-        
-        <Alert
-    //   message="Please read carefully"
-      closable
-      description={<List
-      split={false}
-      itemLayout={'horizontal'}
-      dataSource={data}
-      renderItem={item => (
-        <List.Item>
-         <Typography.Text mark>[ ✔ ]</Typography.Text> {item}
-        </List.Item>
-      )}
-    />}
-      type="warning"
-      showIcon
-    />
-       </div>
-        <div className="justify-content-center d-flex padded-top">
-            <Button type='primary' href='/d4rk/claim'>I understand, let's go</Button>
-          </div>
 
-    </PageContent>
+  const { openSignInModal, state: { completedSteps: { isSignedIn } } } = useAuth()
+  const { state: { address } } = useMyAccount()
+
+
+
+
+  return (
+    <Section className="fullflex padded-top">
+        <HeadMeta title={title} desc='Lock your D4RK coins and claim DARK (DOT) tokens.' />
+        <h1 className='spaced-top text-centered'>{title}</h1>
+
+
+        {isSignedIn && address
+          ? 
+          // <Section className='spaced-top text-centered'>
+          //     DarkBay account: {address}
+          // </Section>
+          <Section className='d4rk-swap-container'>
+
+            <Section className="d4rk-swap-box">
+            <h2 className="d4rk-swap-h2">Send D4RK</h2>
+            <p className='d4rk-swap-desc'>
+              Fund your legacy D4RK coin wallet in DarkBay, then claim 1:1 DARK tokens.
+            </p>
+            <CreateWallet />
+
+            </Section>
+            <Section className="d4rk-swap-box">
+            <h2 className="d4rk-swap-h2">Claim DARK</h2>
+            <p className='d4rk-swap-desc'>
+              After network confirmation, your claimable and claimed transactions will list here.
+            </p>
+            <h3>{ address }</h3>
+            </Section>
+
+          </Section>
+
+
+          :
+          <Section className="spaced-top text-centered">
+            <h3>Please sign in to associate a legacy D4RK address to your DarkBay account.</h3>
+          <Button 
+          className='ant-btn ant-btn-primary addtocart'
+          onClick={() =>  openSignInModal('AuthRequired')}
+          shape="round"
+          size="large"
+          >
+          Sign in
+          </Button>
+          </Section>
+          }
+
+       </Section>
+
   );
 }
+
+
+
+
+
+
 
 export default SwapStart;

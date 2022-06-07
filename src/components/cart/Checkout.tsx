@@ -18,6 +18,8 @@ import { Countries } from '../utils/Countries'
 import { getNonEmptyOrderingContent } from "../utils/content";
 import { HeadMeta } from "../utils/HeadMeta";
 import ShippingViewCart from "./ShippingViewCart";
+import Item from "antd/lib/list/Item";
+import ButtonLink from "../utils/ButtonLink";
 // import EmptyCart from "./EmptyCart";
 
 
@@ -28,7 +30,8 @@ const log = newLogger('Checkout')
 type Content = OrderingContent
 
 type FormValues = Partial<Content & {
-  ordering_state: OrderingState
+  //ordering_state: OrderingState
+  pIds?: string[];
 }>
 
 type FieldName = keyof FormValues
@@ -59,8 +62,8 @@ export function InnerForm (props: FormProps) {
   const { } = props
 
 
-  const {emptyCart, metadata, addItem } = useCart()
-
+  const {emptyCart, cartTotal, items, metadata, addItem } = useCart()
+// log.warn(items[0].sfId)
 
 
   const getFieldValues = (): FormValues => {
@@ -69,20 +72,34 @@ export function InnerForm (props: FormProps) {
 
   // New order TX
   const newTxParams = (cid: IpfsCid) => {
-   // const fieldValues = getFieldValues()
+    // Buyer escrow total
+    const totalBescrow = items
+    .filter((item) => item.quantity != undefined)
+    .reduce(function(prev, cur) 
+    {
+         return (prev + ((cur.price * (cur.bescrow / 100) * cur.quantity!)) );
+    }, 0); 
+    const totalSescrow = items
+    .filter((item) => item.quantity != undefined)
+    .reduce(function(prev, cur) 
+    {
+         return (prev + ((cur.price * (cur.sescrow / 100) * cur.quantity!)) );
+    }, 0); 
+    // Shipping total
+    const totalShipping = items
+    .filter((item) => item.shipcost > 0)
+    .reduce(function(prev, cur) 
+    {
+         return (prev + ((cur.shipcost * cur.quantity!)) );
+    }, 0); 
+    // Cart total
+    const grandTotal = cartTotal + totalBescrow + totalShipping;
 
-    // /** Returns `undefined` if value hasn't been changed. */
-    // function getValueIfChanged (field: FieldName): any | undefined {
-    //   return form.isFieldTouched(field) ? fieldValues[field] as any : undefined
-    // }
-
-      const sfId = 1001
-      //const pId = 3
-      const price = 7
-      const order_total = price * 100
-      const seller = '2khBcSFnYJk2FjeeYRo9946SMrboa7rqHmtycgBM7JyEiTyN'
-      const bescrow = 1
-      const sescrow = 1
+      const sfId = items[0].sfId
+      const order_total = grandTotal
+      const seller = items[0].seller
+      const bescrow = totalBescrow
+      const sescrow = totalSescrow
 
       // TODO
 //      return [ sfId, new IpfsContent(cid), Number(order_total), seller, Number(bescrow), Number(sescrow), pids  ]
@@ -112,7 +129,13 @@ return [ sfId, new IpfsContent(cid), Number(order_total), seller, Number(bescrow
     id && goToView(id)
   }
 
- 
+  
+  const pIds=items.map((item)=>{
+    return { [item.id]: item.quantity }
+})
+
+log.warn(pIds);
+
 
   const goToView = (orderingId: BN) => {
     // Router.push('/[orderingId]', `/${orderingId}`)
@@ -140,9 +163,6 @@ return [ sfId, new IpfsContent(cid), Number(order_total), seller, Number(bescrow
     
   }
 
-  // const onDescChanged = (mdText: string) => {
-  //   form.setFieldsValue({ [fieldName('body')]: mdText })
-  // }
 
 
   return <>
@@ -154,12 +174,24 @@ return [ sfId, new IpfsContent(cid), Number(order_total), seller, Number(bescrow
   <div id="shippingPanel">
     <DfForm form={form} validateTrigger={[ 'onBlur' ]} >
 
+    <Form.Item 
+      labelCol={{ span: 24 }}
+      label="Name">
 
-
+        <Input.Group>
+        <Form.Item
+            name={fieldName('name')}
+            noStyle
+            rules={[{ required: true, message: 'A name is mandatory !' }]}
+          >
+ <Input placeholder='' style={{ width: '100%' }} />
+          </Form.Item>
+          </Input.Group>
+      </Form.Item>
 
       <Form.Item 
       labelCol={{ span: 24 }}
-      label="Delivery Address">
+      label="Shipping Address">
 
         <Input.Group>
         <Form.Item
@@ -220,7 +252,7 @@ return [ sfId, new IpfsContent(cid), Number(order_total), seller, Number(bescrow
 
 
       <Form.Item
-        // name={fieldName('body')}
+        name={fieldName('memo')}
         labelCol={{ span: 24 }}
         label='Note'
         hasFeedback
@@ -230,6 +262,15 @@ return [ sfId, new IpfsContent(cid), Number(order_total), seller, Number(bescrow
 
       </Form.Item> 
 
+
+      <Form.Item
+        style={{ marginTop: "2rem" }}
+              >
+        <Input
+         // This is where you want to disable your UI control
+         disabled={true}
+         placeholder={pIds.toString()}        />
+</Form.Item>
 
  {/*
       {/* <Form.Item
@@ -251,7 +292,14 @@ return [ sfId, new IpfsContent(cid), Number(order_total), seller, Number(bescrow
           onFailed
         }}
       />
+    <ButtonLink className='antd-btn' href='/'>
+                 Continue shopping
+    </ButtonLink>
+
     </DfForm>
+    
+
+
     </div>
 
       <div className="ShippingCartView">

@@ -135,7 +135,7 @@ function InnerForm (props: FormProps) {
           placeholder='Account address per line'
           rows={6}
           style={{
-            fontFamily: 'monostorefront',
+            fontFamily: 'monospace',
             fontSize: '1rem'
           }}
         />

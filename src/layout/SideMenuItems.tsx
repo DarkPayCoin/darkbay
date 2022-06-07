@@ -1,5 +1,5 @@
 import { accountUrl } from 'src/components/urls'
-import { SearchOutlined, RadarChartOutlined, AlertOutlined, HeartOutlined, UserOutlined, ShopOutlined, ShoppingOutlined, ShoppingCartOutlined, PlusOutlined, DeploymentUnitOutlined } from '@ant-design/icons'
+import { SearchOutlined, RadarChartOutlined, AlertOutlined, HeartOutlined, UserOutlined, ShopOutlined, ShoppingOutlined, ShoppingCartOutlined, PlusOutlined, DeploymentUnitOutlined, WalletOutlined } from '@ant-design/icons'
 import { uiShowAdvanced, advancedUrl, uiShowNotifications } from 'src/components/utils/env'
 import React from 'react'
 
@@ -69,8 +69,8 @@ export const buildAuthorizedMenu = (myAddress: string): MenuItem[] => {
       icon: <ShoppingCartOutlined />
     },
     {
-      name: 'My orders',
-      page: [ '/accounts/[address]/orderings', accountUrl(account, 'orderings') ],
+      name: 'My purchases',
+      page: [ '/purchases', '/purchases' ],
       icon: <ShoppingOutlined />
     },
     Divider,
@@ -101,6 +101,11 @@ export const buildAuthorizedMenu = (myAddress: string): MenuItem[] => {
     //   icon: <AuditOutlined />
     // },
     Divider,
+    {
+      name: 'D4RK legacy',
+      page: [ '/d4rk', '/d4rk' ],
+      icon: <WalletOutlined />
+    },
     ...DefaultMenu
   ]
 }

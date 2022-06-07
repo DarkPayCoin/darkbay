@@ -229,7 +229,7 @@ const groupBy = (array: any[], key: string) => {
 
 
                 <ButtonLink className='checkout-btn' href='/cart/checkout'>
-                 Continue to shipping
+                 Checkout
                 </ButtonLink>
 
 

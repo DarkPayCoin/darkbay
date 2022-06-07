@@ -518,6 +518,43 @@ gap: 2%;
   border-radius: 300px;
 }
 
+
+/* D4RK swap pages */
+
+.d4rk-swap-container 
+{
+  display: flex;
+  gap: 5%;
+  padding-top: 40px;
+}
+
+.d4rk-swap-h2 {
+  color: $color_link;
+  text-align: center;
+  width: 100%;
+}
+
+.d4rk-swap-desc {
+  color: $color_muted;
+  text-align: center;
+  width: 100%;
+}
+
+.d4rk-swap-box {
+  flex: 0 0 40%;
+  background-color: #21262A;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.d4rk-full {
+  width: 100%;
+}
+
+
+
+
+
 h3 img {
   margin-right: .4rem;
 }
@@ -2224,4 +2261,23 @@ right: .5rem;
 
 .ant-descriptions-bordered {
   width: 100%;
+}
+
+/* Orders */
+.orderTable .ant-list-items  {
+  display: block;
+  width: 100%;
+}
+
+.d4rkwallet {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.darkwallet-child {
+  flex: 0 0 100%;
+  text-align: center;
 }

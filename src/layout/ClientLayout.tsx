@@ -9,7 +9,19 @@ import { ResponsiveSizeProvider } from 'src/components/responsive';
 // import { KusamaProvider } from 'src/components/kusama/KusamaContext';
 // import { kusamaUrl } from 'src/components/utils/env';
 import { CartProvider } from "react-use-cart";
-
+import { CookiesProvider } from 'react-cookie';
+import { QueryClient, QueryClientProvider } from "react-query";
+// const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      retry: false,
+      staleTime: 5*60*1000,
+    },
+  },
+});
 
 const ClientLayout: React.FunctionComponent = ({ children }) => {
   return (
@@ -22,9 +34,13 @@ const ClientLayout: React.FunctionComponent = ({ children }) => {
             <MyAccountProvider>
               <AuthProvider>
                 <CartProvider>
+                 <CookiesProvider>
+                 <QueryClientProvider client={queryClient}>
                  <Navigation>
                   {children}
                  </Navigation>
+                 </QueryClientProvider>
+                 </CookiesProvider>
                 </CartProvider>
               </AuthProvider>
             </MyAccountProvider>

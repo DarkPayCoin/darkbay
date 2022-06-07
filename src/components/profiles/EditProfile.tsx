@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Form, Input } from 'antd'
 import Router from 'next/router'
 import HeadMeta from '../utils/HeadMeta'
-import Section from '../utils/Section'
 import { getTxParams } from '../substrate'
 import { TxFailedCallback, TxCallback } from 'src/components/substrate/SubstrateTxButton'
 import { ProfileUpdate, OptionIpfsContent, IpfsContent } from '@darkpay/dark-types/substrate/classes'
@@ -18,8 +17,16 @@ import { NAME_MIN_LEN, NAME_MAX_LEN, DESC_MAX_LEN } from 'src/config/Validations
 import { UploadAvatar } from '../uploader'
 import { resolveCidOfContent } from '@darkpay/dark-api/utils'
 import messages from 'src/messages'
+import { getB64PrivKey, getB64PubKey, getNewKeys } from '../utils/Encrypt'
+import { useCookies } from 'react-cookie';
+import { Collapse } from 'antd';
+
+const { Panel } = Collapse
+
 
 const log = newLogger('EditProfile')
+
+
 
 type Content = ProfileContent
 
@@ -116,6 +123,76 @@ export function InnerForm (props: FormProps) {
     form.setFieldsValue({ [fieldName('avatar')]: url })
   }
 
+  const crypto = require('crypto');
+
+  const alice = getNewKeys()
+  
+  const bob = getNewKeys()
+  
+log.warn(alice)
+
+  // Alice's Data
+  console.log("\nAlice Public:", getB64PubKey(alice));
+  console.log("Alice Private:", getB64PrivKey(alice), "\n");
+
+  const [cookies, setCookie] = useCookies(['drkprv']);
+
+  setCookie('drkprv', encodeURIComponent(getB64PrivKey(alice)), { path: '/' });
+
+  // Bob's Data
+  console.log("Bob Public:", getB64PubKey(bob));
+  console.log("Bob Private:", getB64PubKey(bob), "\n");
+  
+  // The Shared Secret will be the same
+  const AliceSharedSecret = alice.computeSecret(bob.getPublicKey(), null, 'base64');
+  const BobSharedSecret = bob.computeSecret(alice.getPublicKey(), null, 'base64');
+  // const AliceSharedSecret = deriveSecretKey(Buffer.from(getB64PrivKey(alice), 'base64'), Buffer.from(getB64PubKey(bob), 'base64'));
+  // const BobSharedSecret = deriveSecretKey(Buffer.from(getB64PrivKey(bob), 'base64'), Buffer.from(getB64PubKey(alice), 'base64'));
+
+  console.log("Alice Shared Secret: ", AliceSharedSecret);
+  console.log("Bob Shared Secret: ", BobSharedSecret);
+  
+const algorithm = "aes-256-cbc"; 
+
+// generate 16 bytes of random data
+const initVector = crypto.randomBytes(16);
+
+// protected data
+const message = "This is a secret message";
+
+// secret key generate 32 bytes of random data
+// const Securitykey = crypto.randomBytes(32);
+const Securitykey = Buffer.from(AliceSharedSecret, 'base64')
+
+
+
+// the cipher function
+const cipher = crypto.createCipheriv(algorithm, Securitykey, initVector);
+
+// encrypt the message
+// input encoding
+// output encoding
+let encryptedData = cipher.update(message, "utf-8", "hex");
+
+encryptedData += cipher.final("hex");
+
+console.log("Encrypted message: " + encryptedData);
+
+// the decipher function
+const decipher = crypto.createDecipheriv(algorithm, Securitykey, initVector);
+
+let decryptedData = decipher.update(encryptedData, "hex", "utf-8");
+
+//decryptedData += decipher.final("utf8");
+
+console.log("Decrypted message: " + decryptedData);
+
+if (!isProfile) {
+  form.setFieldsValue({ [fieldName('gpg')]: alice.getPublicKey().toString('base64') })
+}
+
+
+
   return <>
 
     <DfForm form={form} initialValues={initialValues}>
@@ -151,6 +228,32 @@ export function InnerForm (props: FormProps) {
       >
         <DfMdEditor onChange={onDescChanged} />
       </Form.Item>
+
+
+      <Collapse accordion>
+    <Panel header="Public keys" key={address.toString()}>
+      <Form.Item
+        name={fieldName('gpg')}
+        label='DARK pubkey'
+        
+      >
+        <Input readOnly />
+      </Form.Item>
+
+      <Form.Item
+        name={fieldName('d4rk')}
+        label='D4RK address'
+        hasFeedback
+        rules={[
+          // { required: true, message: 'Name is required.' },
+          { min: NAME_MIN_LEN, message: minLenError('Name', NAME_MIN_LEN) },
+          { max: NAME_MAX_LEN, message: maxLenError('Name', NAME_MAX_LEN) }
+        ]}
+      >
+        <Input placeholder='Not available yet' />
+      </Form.Item>
+      </Panel>
+        </Collapse>
 
       <DfFormButtons
         form={form}
