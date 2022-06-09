@@ -5,6 +5,7 @@ import Section from "src/components/utils/Section";
 import D4rkServiceAPI from "../api/D4rkService"
 import { Form, Input, Button, Checkbox } from 'antd';
 import Router from 'next/router'
+import openNotification from "src/components/utils/OpenNotification";
 
 
 
@@ -14,6 +15,7 @@ type CreateD4rkAccountProps = {
 
 const CreateD4rkAccount: React.FC<CreateD4rkAccountProps> = ({ address }) => {
   const [d4rkExists, setD4rkExists] = useState(false);
+  const [pwdOK, setpwdOK] = useState(false);
 
 
   const checkExists = async (Dotaddrr: any) => {
@@ -30,26 +32,47 @@ const CreateD4rkAccount: React.FC<CreateD4rkAccountProps> = ({ address }) => {
       setD4rkExists(false);
     }
   }
-  const [postDescription, setPostDescription] = useState("");
+  const [confPwd, setConfPwd] = useState("");
+  const [postPwd, setPostPwd] = useState("");
+
   const [postResult, setPostResult] = useState<string | null>(null);
+  
   const fortmatResponse = (res: any) => {
     return JSON.stringify(res, null, 2);
+  };
+
+const setPwd = (str: string) => {
+  setPostPwd(str)
+  checkPwdMatch(str)
+}
+
+  const checkPwdMatch = (str: string) => {
+    setConfPwd(str);
+    console.log(str + ' = ' + postPwd);
+    if (str === postPwd && str != "" && postPwd !="") 
+    {setpwdOK(true)}
+    else {setpwdOK(false)}
+    console.log(pwdOK);
   };
   const { isLoading: isPostingD4rk, mutate: postD4rk } = useMutation<any, Error>(
     async () => {
       return await D4rkServiceAPI.createAccount(
         {
           username: address,
-          password: postDescription
+          password: postPwd
         });
     },
     {
       onSuccess: (res) => {
-        setPostResult(fortmatResponse(res));
+       // setPostResult(fortmatResponse(res));
+       openNotification('Account created', "Redirecting...", 'bottomRight')
+       console.log('account created' + res)
         Router.push('/d4rk')
 
       },
       onError: (err: any) => {
+        openNotification('Error', "Please try again in a few minutes.", 'bottomRight')
+        console.error(err)
         setPostResult(fortmatResponse(err.response?.data || err));
       },
     }
@@ -57,12 +80,14 @@ const CreateD4rkAccount: React.FC<CreateD4rkAccountProps> = ({ address }) => {
 
   useEffect(() => {
     checkExists(address);
-    if (isPostingD4rk) setPostResult("posting...");
-  }, [isPostingD4rk, address]);
+    if (isPostingD4rk) openNotification('Creating account...', 'Please wait a moment', 'bottomRight')
+  }, [isPostingD4rk, address, pwdOK]);
+  
   function postData() {
     try {
       postD4rk();
     } catch (err) {
+      openNotification('An error occurred', err, 'bottomRight');
       setPostResult(fortmatResponse(err));
     }
   }
@@ -85,7 +110,7 @@ const CreateD4rkAccount: React.FC<CreateD4rkAccountProps> = ({ address }) => {
 
         <Form.Item
           name="username"
-          rules={[{ required: true, message: 'Please input your username!' }]}
+          rules={[{ required: true}]}
           hidden
         >
           <Input
@@ -99,6 +124,7 @@ const CreateD4rkAccount: React.FC<CreateD4rkAccountProps> = ({ address }) => {
 
         <Form.Item
           name="password"
+          label='Choose password'
           rules={[
             { required: true, message: 'Please input your password!' },
             { min: 8, message: 'Password must be minimum 8 characters.' }
@@ -106,17 +132,30 @@ const CreateD4rkAccount: React.FC<CreateD4rkAccountProps> = ({ address }) => {
 
         >
           <Input.Password
-            value={postDescription}
-            onChange={(e) => setPostDescription(e.target.value)}
+            value={postPwd}
+            onChange={(e) => setPwd(e.target.value)}
           />
         </Form.Item>
+        <Form.Item
+          label='Confirm password'
+          name="pwdconf"
+          rules={[
+            { required: true, message: 'Please confirm your password!' },
+            { min: 8, message: 'Password must be minimum 8 characters.' }
+          ]}
 
-        <Form.Item name="remember" valuePropName="checked">
-          <Checkbox disabled>I saved my password somewhere, and i understand if i loose it i may loose my funds.</Checkbox>
+        >
+          <Input.Password
+            onChange={(e) => checkPwdMatch(e.target.value)}
+            value={confPwd}
+          />
         </Form.Item>
+        {/* <Form.Item name="remember" valuePropName="checked">
+          <Checkbox checked={check} disabled>I saved my password somewhere, and i understand if i loose it i may loose my funds.</Checkbox>
+        </Form.Item> */}
 
 
-        <Button className="antd-btn antd-btn-primary padded-top" onClick={postData}>
+        <Button className="antd-btn antd-btn-primary padded-top" onClick={postData} disabled={!pwdOK}>
           Create D4RK account
           </Button>
         {postResult && (

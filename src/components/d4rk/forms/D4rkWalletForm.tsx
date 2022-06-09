@@ -33,14 +33,14 @@ const D4rkWalletForm = () => {
     return (
       <Section>
       <div className = "darkwallet-child">
-        <h2><Copy text={d4rkAddress} message="D4RK address copied!">{d4rkAddress}</Copy></h2>
+        <h3><Copy text={d4rkAddress} message="D4RK address copied!">{d4rkAddress}</Copy></h3>
       </div>
        <div className = "darkwallet-child">
-        <QRCode value={d4rkAddress} size={156} level='Q' />
+        <QRCode value={d4rkAddress} size={156} level='H' />
       </div>
-      <div className = "darkwallet-child">
+      {/* <div className = "darkwallet-child">
         <a target="_blank" className="antd-btn" href={"https://explorer.darkpay.market/address/" + d4rkAddress}>View in explorer</a>
-      </div>
+      </div> */}
       </Section>
     );
     }

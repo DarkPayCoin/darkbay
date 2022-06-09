@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useQuery, useMutation } from "react-query";
-import D4rkServiceAPI from "../api/D4rkService"
+
 
 
 
@@ -18,12 +17,6 @@ export const D4rkAccount: React.FunctionComponent<D4rkAccountProps> = React.memo
 
 const DotkAccount = address
 
-const Exists = async () => {
-  return await D4rkServiceAPI.userExists(
-    {
-      username: address,
-    });
-}
 
   return <Section className={`DfD4rkAccount`}>
   <CreateD4rkAccount address={DotkAccount} />

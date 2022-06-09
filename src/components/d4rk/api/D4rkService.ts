@@ -10,7 +10,7 @@ const apiClient = axios.create({
 
 const createAccount = async ({ username, password }: D4rkService) => {
   const response = await apiClient.post<any>("/user/register", { username, password });
-  console.log(response.data);
+  // console.log(response.data);
   return response.data;
 }
 
@@ -19,44 +19,55 @@ const loginAccount = async ({ username, password }: D4rkService) => {
     if (response.data.data) {
         localStorage.setItem("darkuser", JSON.stringify(response.data.data));
       }
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   }
 
   const userExists = async ({ username }: D4rkService) => {
     const response = await apiClient.post<any>("/user/exists", { username });
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   }
   
   const d4rkAddress = async () => {
     const response = await apiClient.get<any>("/user/address", { headers: authHeader() });
-    console.log(response.data);
+    // console.log(response.data);
+    return response.data;
+  }
+
+  const userTxs = async () => {
+    const response = await apiClient.get<any>("/wallet/transactions", { headers: authHeader() });
+    // console.log(response.data);
     return response.data;
   }
 
   const d4rkBalance = async () => {
     const response = await apiClient.get<any>("/user/balance", { headers: authHeader() });
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   }
 
   const lockTx = async ({ amount, recipient }: D4rkService) => {
-
     try {
-   // const amountStr = amount?.toString()
-   //const unused = 'auto'
     const response = await apiClient.post<any>("/wallet/lock", { amount, recipient}, { headers: authHeader() } );
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
-
-  }
-  catch(err) {
+    }
+    catch(err) {
     console.warn(err)
     return(err)
-  }
+    }
     
   }
+
+  const d4rkApiV = async () => {
+    const response = await apiClient.post<any>("/user/api", {});
+    // console.log(response.data);
+    return response.data;
+  }
+
+  
+  
 
 const D4rkServiceAPI = {
   createAccount,
@@ -64,6 +75,8 @@ const D4rkServiceAPI = {
   userExists,
   d4rkAddress,
   d4rkBalance,
-  lockTx
+  lockTx,
+  userTxs,
+  d4rkApiV,
 }
 export default D4rkServiceAPI;

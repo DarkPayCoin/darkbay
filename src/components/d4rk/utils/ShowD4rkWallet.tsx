@@ -62,6 +62,23 @@ async function checkIfLoggedInAndSameUser(address?: string): Promise<boolean> {
   }
 }
 
+async function getUserExists(usr: string): Promise<string> {
+  try {
+    const response = await D4rkServiceAPI.userExists(
+      {
+        username: usr
+      });
+    const json = await response;
+     console.log(json);
+      return (json.data)
+  }
+  catch(error) {
+    return(error)
+  }
+}
+
+
+
 function checkSameUser(address?: string): boolean {
   try {
       const user = localStorage.getItem("darkuser");
@@ -171,7 +188,26 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 export const ShowD4rkWallet: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const { setAddress, state: { address } } = useMyAccount()
+  const [d4rkExists, setD4rkExists] = useState(false);
   const [d4rkUnlocked, setD4rkUnlocked] = useState(false);
+
+
+// get user if is one
+const checkUser = async (address: any) => {
+  const data = await getUserExists(address)
+   .then((data: any) => {
+     if(data == true) {
+      setD4rkExists(true)
+      // console.log('exists :' + data)
+     }
+  })
+  .catch(error => { openNotification('Network error', 'D4RK API is unavailable. Please try again later.', 'bottomRight'); alert(error); })
+  .finally(() => {})
+   //make sure to set it to false so the component is not in constant loading state
+}
+
+
+
 
 
   const onCreate = async (values: any) => {
@@ -183,6 +219,8 @@ export const ShowD4rkWallet: React.FC = () => {
 
   useEffect(() => {
     console.log('Watching address: ', address);
+    const exists = checkUser(address);
+    if(exists) 
     checkIfLoggedInAndSameUser(address).then(result => {
       setD4rkUnlocked(result);
       console.log('useEffect says checkIfLoggedInAndSameUser : '+result)

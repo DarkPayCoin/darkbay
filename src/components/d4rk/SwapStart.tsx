@@ -5,6 +5,7 @@ import { useMyAccount } from '../auth/MyAccountContext';
 import { useAuth } from '../auth/AuthContext';
 import Section from '../utils/Section';
 import { CreateWallet } from './utils/CreateWallet';
+import { Claimable } from './utils/Claimable';
 
 
 type Props = {
@@ -49,6 +50,7 @@ export const SwapStart = ({
               After network confirmation, your claimable and claimed transactions will list here.
             </p>
             <h3>{ address }</h3>
+            <Claimable />
             </Section>
 
           </Section>

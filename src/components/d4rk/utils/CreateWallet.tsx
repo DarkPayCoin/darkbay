@@ -1,75 +1,98 @@
 import React, { useEffect, useState } from "react";
-import { AnyAccountId } from '@darkpay/dark-types';
-import D4rkServiceAPI from "../api/D4rkService"
 import { useMyAccount } from "src/components/auth/MyAccountContext";
 import { Button } from "antd";
 import Link from "next/link";
-import D4rkWalletForm from "../forms/D4rkWalletForm";
 import Section from "src/components/utils/Section";
-import D4rkBalanceForm from "../forms/D4rkBalanceForm";
 import { ShowD4rkWallet } from "./ShowD4rkWallet";
+import openNotification from "src/components/utils/OpenNotification";
+import { checkD4rkApi, getUserExists } from "../api/Check";
 
 
+type CreateWalletProps = {}
 
-type CreateWalletProps = {
-    
-  }
+export const CreateWallet : React.FC<CreateWalletProps> = () => {
+
+  const { state: { address } } = useMyAccount()
+  const [apiOK, setApiOK] = useState(true); // toinit a first call
+  const [d4rkExists, setD4rkExists] = useState(false);
+
+  // check D4RK API state
+const checkAPI = async () => {
+  const data = await checkD4rkApi()
+   .then((data: any) => {
+     //alert(data)
+     if(data.message === 'Network Error') {
+       setApiOK(false)
+       openNotification('Network error', 'D4RK API is unavailable. Please try again later.', 'bottomRight')
+     }
+     if(data == 'v1') {
+      setApiOK(true)
+     }
+     if(data.message === 'Request failed with status code 400') {
+      //setMustCreate(true)
+       }
+  })
+  .catch(error => { openNotification('Network error', 'D4RK API is unavailable. Please try again later.', 'bottomRight'); setApiOK(false) })
+  .finally(() => {})
+   //make sure to set it to false so the component is not in constant loading state
+}
 
 
-
-  export const CreateWallet : React.FC<CreateWalletProps> = () => {
-    const { setAddress, state: { address } } = useMyAccount()
-
-    const [d4rkExists, setD4rkExists] = useState(false);
-
-    // const Dotaddrr = { address }
   
-    const checkExists = async (Dotaddrr: any) => {
+// get user if is one
+const checkUser = async (address: any) => {
+  const data = await getUserExists(address)
+   .then((data: any) => {
+     if(data.message === 'Network Error') {
+       setApiOK(false)
+     }
+     if(data == true) {
+      setD4rkExists(true)
+     }
+     if(data.message === 'Request failed with status code 400') {
+      setD4rkExists(false)
+       }
+  })
+  .catch(error => { openNotification('Network error', 'D4RK API is unavailable. Please try again later.', 'bottomRight'); })
+  .finally(() => {})
+   //make sure to set it to false so the component is not in constant loading state
+}
 
-        try {
-            const res = await D4rkServiceAPI.userExists(
-                    {
-                      username: Dotaddrr
-                    });
-                console.log(res.msg);
-                setD4rkExists(true);
-          } catch (error) {
-            console.error(error);
-            setD4rkExists(false);
-          }
-      }
-      
 
 
-
+// useEffect
 useEffect(() => {
     console.log('Watching address: ', address);
-    checkExists(address);
-  }, [address]);
-  
-   if (!d4rkExists) return (
-//    <span>Please create a D4RK wallet</span>
-<p className="d4rk-swap-desc">
-<Button className="antd-btn">
-   <Link href="d4rk/create">Create a D4RK account</Link>
-</Button>
-</p>
-   );
-  
-return (
-<Section>
-{/* <D4rkWalletForm />
-<D4rkBalanceForm /> */}
-<ShowD4rkWallet />
+    console.log('Checking D4RK API connectivity...')
+    checkAPI();
+    if(apiOK) {
+      console.log('Checking user for address...')
+      checkUser(address);
+
+    }
+});;
+
+
+// If API KO
+if(!apiOK) {
+  return (
+    <Section className="d4rk-swap-desc">
+<h5>D4RK API is unavailable at the moment.<br />Please try again later.</h5>
 </Section>
+  )
+}
 
-)
 
-    // return <span>
-      
-    //   Test : {d4rkExists.toString()} for {address}
-
-    // </span>
-    
-  }
-  
+// ELSE OK
+return (
+<Section className="d4rk-swap-desc">
+{d4rkExists ? 
+ <ShowD4rkWallet />
+: 
+  <Button className="ant-btn ant-btn-primary">
+   <Link href="d4rk/create">Create a D4RK account</Link>
+  </Button>
+}
+</Section>
+  )
+}

@@ -1,30 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AnyAccountId } from '@darkpay/dark-types';
+import React, {  useEffect, useState } from "react";
 import D4rkServiceAPI from "../api/D4rkService"
 import { useMyAccount, useMyAddress } from "src/components/auth/MyAccountContext";
-import Link from "next/link";
-import D4rkWalletForm from "../forms/D4rkWalletForm";
 import Section from "src/components/utils/Section";
-// import createLockTransaction from "./createLockTransaction";
-import { Button, notification, Divider, Space, Form, Input, Modal, Radio, InputNumber, Spin, Select, Row, Col, Slider, Checkbox, Popover } from 'antd';
-import type { NotificationPlacement } from 'antd/lib/notification';
-import { useMutation } from "react-query";
 
-import Router from 'next/router'
-import axios from "axios";
+import { Button, Form, Modal, InputNumber, Spin, Row, Col, Slider, Checkbox, Popover, Collapse } from 'antd';
+
 
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
-
-
-
-const openNotification = (message: string, description: string, placement: NotificationPlacement) => {
-  notification.info({
-    message: message,
-    description:
-      description,
-    placement,
-  });
-};
+import openNotification from "src/components/utils/OpenNotification";
+import { ClockCircleOutlined, LockOutlined } from "@ant-design/icons";
+import Router from 'next/router'
+import { TxHistory } from "../utils/TxHistory";
 
 
 
@@ -173,6 +159,19 @@ export const D4rkBalanceForm: React.FC = () => {
   const [d4rkBalance, setD4rkBalance] = useState('0.00');
   const [isLoading, setisLoading] = useState(false); //Set initial value to false to avoid your component in loading state if the first call fails
   const { state: { address } } = useMyAccount()
+  const [isHistoryModalVisible, setIsHistoryModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsHistoryModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsHistoryModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsHistoryModalVisible(false);
+  };
 
 // get balance
   const fetchBalance = async () => {
@@ -193,6 +192,7 @@ export const D4rkBalanceForm: React.FC = () => {
     const txSend = createLockTransaction(values.amount, fakeRcpt);
     setTxStatus(await txSend)
     setVisible(false);
+    fetchBalance()
     }
     catch(err) {
       console.log(err)
@@ -200,6 +200,8 @@ export const D4rkBalanceForm: React.FC = () => {
     }
   }
   };
+
+  // getTransactions()
 
   useEffect(() => {
     fetchBalance()
@@ -237,7 +239,23 @@ export const D4rkBalanceForm: React.FC = () => {
          balance={parseFloat(d4rkBalance)}
        />
      </div>
-     </Section>
+     <Section className="padded-top">
+       <Button type="text" 
+         onClick={() =>  { localStorage.removeItem("darkuser"); window.location.reload() }}
+       >
+      <LockOutlined /> Lock wallet
+      </Button>
+      <Button type="text" 
+        onClick={() =>  showModal()}
+      >
+        <ClockCircleOutlined /> History
+      </Button>
+    </Section>
+    <Modal title="Transaction history" visible={isHistoryModalVisible} width="100vw" onOk={handleOk} onCancel={handleCancel}>
+       
+        <TxHistory />
+      </Modal>
+  </Section>
         )
     }
     return <Spin />
