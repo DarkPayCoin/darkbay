@@ -1,6 +1,7 @@
 import axios from "axios";
 import D4rkService from "./ApiTypes";
 import authHeader from "./AuthHeaders"
+
 const apiClient = axios.create({
   baseURL: "http://127.0.0.1:7776/api/v1",
   headers: {

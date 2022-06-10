@@ -11,6 +11,11 @@ import { showErrorMessage, showSuccessMessage } from 'src/components/utils/Messa
 import { TxButton, TxButtonProps } from 'src/components/substrate/SubstrateTxButton'
 import dynamic from 'next/dynamic'
 import { LoadingOutlined } from '@ant-design/icons'
+import { OptionBool } from '@darkpay/dark-types/substrate/classes'
+import { formatBalance } from '@polkadot/util';
+import BN from 'bn.js'
+
+
 
 export const NoClaimable = React.memo(() =>
   <NoData description='No claimable tokens yet.' />
@@ -31,46 +36,44 @@ export const Claimable: React.FC<ClaimableProps> = () => {
 
   
   useDarkdotEffect(({ substrate }) => {
-    var newStateArray = claimableData.slice();
+    var newStateArray = [{}];
+    var claimedArray = [];
 
     const load = async () => {
       const api = await substrate.api
       setisLoading(true)
-      const newItems: any[] = []
+      const fullList: any[] = []
 
-      const txList = await api.query.swap.swapIdsByOwner(myAddress)
-      .then((ids)=>{
-          
-        const idsJs = JSON.stringify(ids)
-                 console.warn(idsJs)
-                  setClaimableDataIds(JSON.parse(idsJs))
-                  claimableDataIds.forEach(async function(item){
-            const txDetail = await api.query.swap.swapById(item)
-            .then((txDetail) => {
-                const txDetailStr = JSON.stringify(txDetail)
-                const txToJson = JSON.parse(txDetailStr)
-                console.log('txdetailSTR => ' + txDetailStr)
-                console.log('txdetailJSON => ' + txToJson['id'])
-                //alert('txdetailJSON => ' + txToJson['claimed'])
+      const txIdsList = await api.query.swap.swapIdsByOwner(myAddress);
+      const txIdsListJson = JSON.parse(JSON.stringify(txIdsList))
 
-// {"id":9,"created":{"account":"2i7x3rQHcty8gHdgWg3trfZKLLC99VerAWhF4apUHVt6gJzG","block":35283,"time":1654598844000},"updated":null,"amount":10,"d4rktx":"f5d7f40a6d52946c65e4cf37656cf085828cf4e466e3f4253787da9069ee7191","claimer":"2n1VSYdvbmnQizKfkjGRKXUfo5vG8X4kipYn4KBViLqj26ew","claimed":false}
-                
-              //  setClaimableData(prevState => [...prevState, {key: txToJson['id'], txid: txToJson['d4rktx'], amount: txToJson['amount'], claimed: txToJson['claimed'] }]);
-              newStateArray.push({key: txToJson['id'], txid: txToJson['d4rktx'], amount: txToJson['amount'], claimed: txToJson['claimed'] })
-            })
+      for (const txid of txIdsListJson) {
+        const txDetail = await api.query.swap.swapById(txid)
+        const txDetailStr = JSON.stringify(txDetail)
+        const txToJson = JSON.parse(txDetailStr)
+        console.log('txdetailSTR => ' + txDetailStr)
+        console.log('txdetailJSON => ' + txToJson['id'])
+        // already claimed
+        if(txToJson['claimed'] === true) {
+          claimedArray.push({key: txToJson['id'], txid: txToJson['d4rktx'], amount: txToJson['amount'], claimed: txToJson['claimed'] })
+        }
+        // claimable
+        else if(txToJson['id'] > 9 && txToJson['amount'] > 0 && txToJson['claimed'] === false) {
+          newStateArray.push({key: txToJson['id'], txid: txToJson['d4rktx'], amount: txToJson['amount'], claimed: txToJson['claimed'] })
+        }
+      }
 
-                  })
 
-        })
-      .catch((err)=>{alert(err)});
 
-        console.warn(claimableData)
-        setClaimableData(newStateArray);
+      console.warn(newStateArray)
+
+      newStateArray.shift()
+      setClaimableData(newStateArray);
       setisLoading(false)
 
     }
     load()
-  }, [])
+  }, [myAddress])
 
 
   const commonFormTxButtonProps: TxButtonProps = {
@@ -91,31 +94,41 @@ export const Claimable: React.FC<ClaimableProps> = () => {
     { loading: TxButtonStub, ssr: false }
   )
 
-  function getClaimStatus(claimed: boolean): any {
 
-    const txParams = [3, null]
+
+
+function getFormattedBalance(amount: number) : any {
+ 
+   // const { unit: defaultCurrency, decimals: defaultDecimal } = formatBalance.getDefaults()
+    return formatBalance(amount);
+
+}
+
+
+  function getClaimStatus(id: number, claimed: boolean): any {
+
+    const txParams = [id, new OptionBool(true) ]
 
     if(claimed === true )
       {return 'Claimed'}
     return (
+        // <span>nope</span>
 
-        <span>nope</span>
 
+    <TxButton 
+        label='Claim'
+        tx='swap.updateSwap'
+        params={txParams}
+        onFailed={(txResult) => {
+            console.error('Comment err ===> '+txResult?.dispatchError?.toString)
+            showErrorMessage('Failed to claim tokens')
+          }}
+          onSuccess={(txResult) => {
+            const id = getNewIdFromEvent(txResult)
+            showSuccessMessage('Tokens minted')
+          }}
 
-    // <TxButton 
-    //     label='Claim'
-    //     tx='swap.updateSwap'
-    //     params={txParams}
-    //     onFailed={(txResult) => {
-    //         console.error('Comment err ===> '+txResult?.dispatchError?.toString)
-    //         showErrorMessage('Failed to claim tokens')
-    //       }}
-    //       onSuccess={(txResult) => {
-    //         const id = getNewIdFromEvent(txResult)
-    //         showSuccessMessage('Tokens minted')
-    //       }}
-
-    // />
+    />
 
     )
  }
@@ -136,16 +149,21 @@ export const Claimable: React.FC<ClaimableProps> = () => {
     {
         title: "Amount",
         name: "Amount",
-        dataIndex: "amount"
+        dataIndex: "amount",
+        render: function ( amount: number ) {
+            return getFormattedBalance(amount)
+          }
       },
       {
         title: "Claimed",
         name: "Claimed",
         dataIndex: "claimed",
-        render: (claimed: boolean) => getClaimStatus(claimed)
-
+        render: function ( claimed: boolean, row: any ) {
+            return getClaimStatus(row.key, claimed)
+          }
       },
   ];
+
 
 
 

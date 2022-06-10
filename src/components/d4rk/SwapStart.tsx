@@ -49,10 +49,9 @@ export const SwapStart = ({
             <p className='d4rk-swap-desc'>
               After network confirmation, your claimable and claimed transactions will list here.
             </p>
-            <h3>{ address }</h3>
+            {/* <h3>{ address }</h3> */}
             <Claimable />
             </Section>
-
           </Section>
 
 
