@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useMyAccount } from "src/components/auth/MyAccountContext";
-import { Button, Spin, Table } from "antd";
+import { Button, Spin, Table, Tag } from "antd";
 import Link from "next/link";
 import Section from "src/components/utils/Section";
 import { ShowD4rkWallet } from "./ShowD4rkWallet";
@@ -31,16 +31,6 @@ async function getTransactions(): Promise<any> {
     }
   }
 
-function getTxStatus(status: number): string {
-   if(status = 1 )
-     {return 'Confirmed'}
-   return 'Unconfirmed'
-}
-
-// function getTxLink(txid: string): string {
-//     const txLink = '<a href="https://explorer.darkpay.market/tx/' + txid + '">view in explorer</a>';
-//    return txLink
-// }
 
 
 export const TxHistory : React.FC<TxHistoryProps> = () => {
@@ -77,12 +67,15 @@ export const TxHistory : React.FC<TxHistoryProps> = () => {
           title: "#",
           name: "Id",
           dataIndex: "key",
+          sorter: true,
+
+          
         },
-        {
-          name: "UrerId",
-          dataIndex: "userid",
-          hidden: true
-        },
+        // {
+        //   name: "UrerId",
+        //   dataIndex: "userid",
+        //   hidden: true
+        // },
         {
             title: "Amount",
             name: "Amount",
@@ -92,7 +85,13 @@ export const TxHistory : React.FC<TxHistoryProps> = () => {
           title: "TxId",
           name: "TxId",
           dataIndex: "txid",
-          // render: (txid: string) => { return <Link href="">view tx</Link> }
+          render: (txid: string) => { 
+           const linkref = "https://explorer.darkpay.market/tx/"+txid
+            return <Link href={linkref}>  
+            <a target="_blank" rel="noopener noreferrer" className='link-item'>
+              view in explorer
+            </a>
+            </Link> }
         },
         {
           title: "Type",
@@ -103,7 +102,19 @@ export const TxHistory : React.FC<TxHistoryProps> = () => {
             title: "Status",
             name: "Status",
             dataIndex: "status",
-            render: (status: number) => getTxStatus(status)
+            // render: (status: number) => getTxStatus(status)
+            // render: (status: number) => {
+            //   if(status < 1) { 
+            //     return '<span style={{ color: "yellow" }}>Unconfirmed</span>' 
+            //   }
+            //   return '<span style={{ color: "green" }}>Confirmed</span>' 
+            //   }
+            render: (status: number) => (
+              <span>
+                {status > 0 ? <Tag color="green" >Confirmed</Tag> : <Tag color="yellow" >Unconfirmed</Tag>}
+              </span>
+            )
+            
           },
         {
           title: "Notes",

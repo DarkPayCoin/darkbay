@@ -3,8 +3,8 @@ import { isEmptyStr } from '@darkpay/dark-utils'
 import { mdToText, summarize } from 'src/utils'
 import { useIsMobileWidthOrDevice } from 'src/components/responsive'
 
-const MOBILE_SUMMARY_LEN = 120
-const DESKTOP_SUMMARY_LEN = 120
+const MOBILE_SUMMARY_LEN = 75
+const DESKTOP_SUMMARY_LEN = 75
 
 type Props = {
   md?: string

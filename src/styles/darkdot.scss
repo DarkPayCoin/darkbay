@@ -236,7 +236,7 @@ pre {
 .ProductImagePreview {
   background-position: center center;
   background-size: cover;
-  min-height: 20vh;
+  min-height: 30vh;
   margin-bottom: .5rem;
 }
 
@@ -266,8 +266,12 @@ pre {
 }
 
 .ProductPreviewHeader .header {
-  font-size: 1.3rem;
-  line-height: 1.5rem;
+  font-size: 1.5rem;
+  line-height: 1.7rem;
+}
+
+.ProductPreviewInner {
+  padding-bottom: 1rem;
 }
 
 /* full product page */
@@ -418,10 +422,6 @@ pre {
   
 }
 
-.DfStorefrontBannerFull {
-  flex: 0 0 100%;
-}
-
 .DfSection-title, .PageTitle {
   margin-top: 3rem;
   flex: 0 0 100%;
@@ -431,6 +431,41 @@ pre {
   margin: 0;
   font-size: 1.5rem;
   line-height: 2rem;
+}
+
+// Homepage Products
+.DfSection .homeList-products li.ant-list-item.ant-list-item-no-flex {
+  flex: 0 0 31%;
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
+}
+
+.DfSection .homeList-products .ant-list-items {
+  //  border: 1px solid red;
+    justify-content: space-around;
+  }
+
+.ProductPreviewHeader {
+  padding-top: 1rem;
+}
+
+.ProductPreviewBody {
+  height: 30%;
+}
+
+// Homepage SF
+.DfSection .homeList-storefronts li.ant-list-item.ant-list-item-no-flex {
+  flex: 0 0 48%;
+}
+
+.DfSection .homeList-storefronts .ant-list-items {
+//  border: 1px solid red;
+  justify-content: space-around;
+}
+
+.StorefrontDetails .DfBgBanner {
+  height: 70px !important;
 }
 
 @media (min-width: 1200px) {
@@ -1985,24 +2020,70 @@ margin: 0 auto;
   background: transparent !important;
 }
 
+
 .DfStorefrontBannerFull {
+  border-bottom: 1px solid #343A3F;
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0;
+  background-color: #000;
+}
+
+.DfStorefrontBannerFull span {
+  flex: 0 0 100%;
+  justify-content: center;
+  align-items: center;
+  height: 35vh
+  }
+  
+  .DfStorefrontBannerFull span .DfBgBanner {
+    position: relative;
+    box-sizing: border-box;
+    // border: 1px solid red;
+    width: 100%  !important;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: 35vh !important;
+  }
+
+.homeList-storefronts .DfStorefrontBannerFull {
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0 0;
   background-color: #000;
   border-bottom: 1px solid #343A3F;
-  min-height: 20vh;
 }
 
-.DfBgBanner {
+.homeList-storefronts .DfStorefrontBannerFull span {
+flex: 0 0 100%;
+justify-content: center;
+align-items: center;
+height: 18vh;
+}
+
+
+
+.homeList-storefronts .DfStorefrontBannerFull span .DfBgBanner {
   position: relative;
+  box-sizing: border-box;
+  // border: 1px solid red;
   width: 100%  !important;
-  height: 20vh !important;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  min-height: 18vh !important;
 }
 
-.StorefrontDetails .DfBgBanner {
-  height: 30vh !important;
+
+
+
+.StorefrontTitle .header {
+  font-size: 2rem;
 }
 
 .DfBannerLink {
@@ -2204,10 +2285,6 @@ h5.totalAddCart4Human {
   height: auto !important;
   vertical-align: middle !important;
   display: flex;
-
-}
-
-.shippingPanel {
 
 }
 

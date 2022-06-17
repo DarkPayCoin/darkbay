@@ -35,7 +35,7 @@ import { EntityStatusProps, HiddenEntityPanel } from 'src/components/utils/Entit
 import MoveProductLink from '../MoveProductLink';
 import ProductPriceToDark from './ProductPriceToDark';
 import AddToCartWidget from 'src/components/cart/AddToCartWidget';
-import { mdToText } from 'src/utils';
+// import { mdToText } from 'src/utils';
 
 type DropdownProps = {
   storefront: Storefront
@@ -341,7 +341,9 @@ export const InfoProductPreview: React.FunctionComponent<ProductPreviewProps> = 
         <ProductName storefront={storefront.struct} product={product} title={title} withLink /> 
         <ProductDropDownMenu productDetails={productDetails} storefront={storefront.struct} withEditButton />
         </div>
-        <div className="ProductPreviewBody">{mdToText(summar)}</div>
+        <div className="ProductPreviewBody">   
+         <SummarizeMd md={body} more={renderProductLink(storefront.struct, product, 'See More')} />
+        </div>
         <div className='ProductPreviewPriceCart'>
         <div className='ProductPreviewPriceInfo'>
         <h3 className='fullProductViewPrice'>{productPriceView} $</h3>

@@ -207,7 +207,9 @@ const ProfilePage: NextPage<Props> = (props) => {
 ProfilePage.getInitialProps = async (props): Promise<any> => {
   const { query: { address }, res } = props;
   const darkdot = await getDarkdotApi()
-  const { substrate } = await darkdot
+  if(darkdot) {
+    const { substrate } = darkdot
+
   const accountId = await getAccountId(address as string);
 
   if (!accountId && res) {
@@ -227,6 +229,7 @@ ProfilePage.getInitialProps = async (props): Promise<any> => {
     storefrontsData,
     myStorefrontIds
   };
+}
 };
 
 export default ProfilePage;

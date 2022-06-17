@@ -19,7 +19,7 @@ async function createLockTransaction(amount: number, recipient: string): Promise
     const res = await D4rkServiceAPI.lockTx({amount: amount, recipient: recipient})
       console.log('@@@ LOCK TX ' + amount +' D4RK');
       console.log(res);
-      openNotification('Transaction successfull','TxId: ' + res + '<br />After 12 network confirmations you can claim your tokens.', 'bottomRight');
+      openNotification('Transaction successfull','TxId: ' + res.data.txid + ', After 12 network confirmations you can claim your tokens.', 'bottomRight');
       return true
   }
   catch(error) {

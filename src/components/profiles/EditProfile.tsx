@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Input } from 'antd'
+import { Alert, Button, Form, Input, Modal } from 'antd'
 import Router from 'next/router'
 import HeadMeta from '../utils/HeadMeta'
 import { getTxParams } from '../substrate'
@@ -20,6 +20,10 @@ import messages from 'src/messages'
 import { getB64PrivKey, getB64PubKey, getNewKeys } from '../utils/Encrypt'
 import { useCookies } from 'react-cookie';
 import { Collapse } from 'antd';
+import { useMyAccount } from '../auth/MyAccountContext'
+import * as openpgp from 'openpgp';
+
+
 
 const { Panel } = Collapse
 
@@ -27,7 +31,136 @@ const { Panel } = Collapse
 const log = newLogger('EditProfile')
 
 
+// PGP functions
+// ✅ Using a type as Promise<Type>
+type D4rkPGP = {
+  privateKey: string;
+  publicKey: string;
+  revocationCertificate: string
+};
 
+async function createD4rkPGP(username: string, password: string): Promise<D4rkPGP> {
+  try {
+    const { privateKey, publicKey, revocationCertificate } = await openpgp.generateKey({
+      type: 'ecc', // Type of the key, defaults to ECC
+      curve: 'curve25519', // ECC curve name, defaults to curve25519
+      userIDs: [{ name: 'Jon Smith', email: 'jon@example.com' }], // you can pass multiple user IDs
+      passphrase: 'super long and hard to guess secret', // protects the private key
+      format: 'armored' // output key format, defaults to 'armored' (other options: 'binary' or 'object')
+  });
+
+  console.log(privateKey);     // '-----BEGIN PGP PRIVATE KEY BLOCK ... '
+  console.log(publicKey);      // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
+  console.log(revocationCertificate); // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
+
+  let Privbuff = Buffer.from(privateKey, 'base64')
+  let Pubbuff = Buffer.from(publicKey, 'base64')
+  let revbuff = Buffer.from(revocationCertificate, 'base64')
+
+
+  return { privateKey: Privbuff.toString('hex'), publicKey: Pubbuff.toString('hex'), revocationCertificate: revbuff.toString('hex') }
+
+  }
+  catch(error) {
+    console.log('@@@ ERROR LOGIN user ' + username);
+    console.log(error)
+    openNotification('PGP error','There was an error generating your keys, please try again.','bottomRight');
+    return { privateKey: '', publicKey: '', revocationCertificate:''}
+  }
+}
+
+
+
+// PGP MODAL
+
+interface Values {
+  username: string;
+  password: string;
+}
+
+interface PgPCreateFormProps {
+  visible: boolean;
+  onCreate: (values: Values) => void;
+  onCancel: () => void;
+}
+
+const PgPCreateForm: React.FC<PgPCreateFormProps> = ({
+  visible,
+  onCreate,
+  onCancel,
+}) => {
+  const [form] = Form.useForm();
+  const { setAddress, state: { address } } = useMyAccount()
+
+
+  
+  return (
+    <Modal
+      visible={visible}
+      title="Generate your DARK keys"
+      okText="Create my keys"
+      cancelText="Cancel"
+      onCancel={onCancel}
+      onOk={() => {
+        form
+          .validateFields()
+          .then(values => {
+            form.resetFields();
+            onCreate(values);
+          })
+          .catch(info => {
+            console.log('Validate Failed:', info);
+          });
+      }}
+    >
+
+      <Form
+        form={form}
+        layout="vertical"
+        name="form_in_modal"
+        initialValues={{ username: address }}
+      >
+      <Form.Item
+            name="username"
+            rules={[{ required: true, message: 'Please input your username!' }]}
+            hidden
+          >
+            <Input
+              //placeholder={address}
+              //defaultValue={address}
+              value={address}
+              readOnly
+              hidden
+            />
+          </Form.Item>
+  
+          <Form.Item
+            label="Please choose a password to encrypt your keys"
+            name="password"
+            rules={[
+              { required: true, message: 'Please input your password!' },
+              { min: 8, message: 'Password must be minimum 8 characters.' }
+            ]}
+  
+          >
+            <Input.Password
+            />
+          </Form.Item>
+
+      </Form>
+      <Alert
+      message="Save your password and key"
+      description="Your keys are generated client-side (in your browser) and there is no way to recover if you loose them."
+      type="warning"
+      showIcon
+      closable={false}
+    />
+    </Modal>
+  );
+};
+
+
+// Profile Form
 type Content = ProfileContent
 
 type FormValues = Partial<Content>
@@ -49,6 +182,8 @@ function getInitialValues ({ owner }: FormProps): FormValues {
   return {}
 }
 
+
+
 export function InnerForm (props: FormProps) {
   const [ form ] = Form.useForm()
   const { ipfs } = useDarkdotApi()
@@ -57,6 +192,23 @@ export function InnerForm (props: FormProps) {
   const { owner, address } = props
   const isProfile = owner?.profile
   const initialValues = getInitialValues(props)
+
+  const [visible, setVisible] = useState(false);
+
+  const onCreate = async (values: any) => {
+    console.log('Received values of PGP form: ', values);
+    const keys = await createD4rkPGP(values.username, values.password);
+    const privbase64 = Buffer.from(keys.privateKey, 'hex').toString('base64');
+    const pubbase64 = Buffer.from(keys.publicKey, 'hex').toString('base64');
+
+console.log(keys)  
+console.log('------ decoded hex keys -----------' )
+console. log('priv : '+privbase64 + 'pub : '+pubbase64 )
+    // const unlockSuccess = unlockD4rkWallet(values.username, values.password);
+    // setD4rkUnlocked(await unlockSuccess)
+    setVisible(false);
+  };
+
 
   const getFieldValues = (): FormValues => {
     return form.getFieldsValue() as FormValues
@@ -123,73 +275,76 @@ export function InnerForm (props: FormProps) {
     form.setFieldsValue({ [fieldName('avatar')]: url })
   }
 
-  const crypto = require('crypto');
+//   const crypto = require('crypto');
 
-  const alice = getNewKeys()
+//   const alice = getNewKeys()
   
-  const bob = getNewKeys()
+//   const bob = getNewKeys()
   
-log.warn(alice)
+// log.warn(alice)
 
-  // Alice's Data
-  console.log("\nAlice Public:", getB64PubKey(alice));
-  console.log("Alice Private:", getB64PrivKey(alice), "\n");
+//   // Alice's Data
+//   console.log("\nAlice Public:", getB64PubKey(alice));
+//   console.log("Alice Private:", getB64PrivKey(alice), "\n");
 
-  const [cookies, setCookie] = useCookies(['drkprv']);
+//   const [cookies, setCookie] = useCookies(['drkprv']);
 
-  setCookie('drkprv', encodeURIComponent(getB64PrivKey(alice)), { path: '/' });
+//   setCookie('drkprv', encodeURIComponent(getB64PrivKey(alice)), { path: '/' });
 
-  // Bob's Data
-  console.log("Bob Public:", getB64PubKey(bob));
-  console.log("Bob Private:", getB64PubKey(bob), "\n");
+//   // Bob's Data
+//   console.log("Bob Public:", getB64PubKey(bob));
+//   console.log("Bob Private:", getB64PubKey(bob), "\n");
   
-  // The Shared Secret will be the same
-  const AliceSharedSecret = alice.computeSecret(bob.getPublicKey(), null, 'base64');
-  const BobSharedSecret = bob.computeSecret(alice.getPublicKey(), null, 'base64');
-  // const AliceSharedSecret = deriveSecretKey(Buffer.from(getB64PrivKey(alice), 'base64'), Buffer.from(getB64PubKey(bob), 'base64'));
-  // const BobSharedSecret = deriveSecretKey(Buffer.from(getB64PrivKey(bob), 'base64'), Buffer.from(getB64PubKey(alice), 'base64'));
+//   // The Shared Secret will be the same
+//   const AliceSharedSecret = alice.computeSecret(bob.getPublicKey(), null, 'base64');
+//   const BobSharedSecret = bob.computeSecret(alice.getPublicKey(), null, 'base64');
+//   // const AliceSharedSecret = deriveSecretKey(Buffer.from(getB64PrivKey(alice), 'base64'), Buffer.from(getB64PubKey(bob), 'base64'));
+//   // const BobSharedSecret = deriveSecretKey(Buffer.from(getB64PrivKey(bob), 'base64'), Buffer.from(getB64PubKey(alice), 'base64'));
 
-  console.log("Alice Shared Secret: ", AliceSharedSecret);
-  console.log("Bob Shared Secret: ", BobSharedSecret);
+//   console.log("Alice Shared Secret: ", AliceSharedSecret);
+//   console.log("Bob Shared Secret: ", BobSharedSecret);
   
-const algorithm = "aes-256-cbc"; 
+// const algorithm = "aes-256-cbc"; 
 
-// generate 16 bytes of random data
-const initVector = crypto.randomBytes(16);
+// // generate 16 bytes of random data
+// const initVector = crypto.randomBytes(16);
 
-// protected data
-const message = "This is a secret message";
+// // protected data
+// const message = "This is a secret message";
 
-// secret key generate 32 bytes of random data
-// const Securitykey = crypto.randomBytes(32);
-const Securitykey = Buffer.from(AliceSharedSecret, 'base64')
+// // secret key generate 32 bytes of random data
+// // const Securitykey = crypto.randomBytes(32);
+// const Securitykey = Buffer.from(AliceSharedSecret, 'base64')
 
 
 
-// the cipher function
-const cipher = crypto.createCipheriv(algorithm, Securitykey, initVector);
+// // the cipher function
+// const cipher = crypto.createCipheriv(algorithm, Securitykey, initVector);
 
-// encrypt the message
-// input encoding
-// output encoding
-let encryptedData = cipher.update(message, "utf-8", "hex");
+// // encrypt the message
+// // input encoding
+// // output encoding
+// let encryptedData = cipher.update(message, "utf-8", "hex");
 
-encryptedData += cipher.final("hex");
+// encryptedData += cipher.final("hex");
 
-console.log("Encrypted message: " + encryptedData);
+// console.log("Encrypted message: " + encryptedData);
 
-// the decipher function
-const decipher = crypto.createDecipheriv(algorithm, Securitykey, initVector);
+// // the decipher function
+// const decipher = crypto.createDecipheriv(algorithm, Securitykey, initVector);
 
-let decryptedData = decipher.update(encryptedData, "hex", "utf-8");
+// let decryptedData = decipher.update(encryptedData, "hex", "utf-8");
 
-//decryptedData += decipher.final("utf8");
+// //decryptedData += decipher.final("utf8");
 
-console.log("Decrypted message: " + decryptedData);
+// console.log("Decrypted message: " + decryptedData);
 
-if (!isProfile) {
-  form.setFieldsValue({ [fieldName('gpg')]: alice.getPublicKey().toString('base64') })
-}
+// if (!isProfile) {
+//   form.setFieldsValue({ [fieldName('gpg')]: alice.getPublicKey().toString('base64') })
+// }
+
+
+/*******  PGP STUFF   */
 
 
 
@@ -230,6 +385,23 @@ if (!isProfile) {
       </Form.Item>
 
 
+      <Button
+         type="primary"
+         onClick={() => {
+           setVisible(true);
+         }}
+       >
+         Create DARK keys
+       </Button>
+       <PgPCreateForm
+         visible={visible}
+         onCreate={onCreate}
+         onCancel={() => {
+         setVisible(false);
+         }}
+       />
+
+{/* 
       <Collapse accordion>
     <Panel header="Public keys" key={address.toString()}>
       <Form.Item
@@ -253,7 +425,7 @@ if (!isProfile) {
         <Input placeholder='Not available yet' />
       </Form.Item>
       </Panel>
-        </Collapse>
+        </Collapse> */}
 
       <DfFormButtons
         form={form}
@@ -293,3 +465,7 @@ export const EditProfile = withMyProfile(FormInSection)
 export const NewProfile = withMyProfile(FormInSection)
 
 export default NewProfile
+function openNotification(arg0: string, arg1: string, arg2: string) {
+  throw new Error('Function not implemented.')
+}
+

@@ -17,7 +17,7 @@ export const LatestStorefronts = (props: Props) => {
 
   return <>
     <DataList
-      className='homeList'
+      className='homeList-storefronts'
       title={<span className='d-flex justify-content-between align-items-end w-100'>
         {'Latest storefronts'}
         {canHaveMoreStorefronts && <AllStorefrontsLink />}

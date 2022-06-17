@@ -128,7 +128,7 @@ export function AuthProvider (props: React.PropsWithChildren<any>) {
 
   const contextValue = {
     state: {
-      showOnBoarding: showOnBoarding,
+      showOnBoarding: false,
       currentStep,
       completedSteps: {
         isSignedIn,

@@ -82,7 +82,7 @@ export function TxButton ({
 
   let unsub: VoidFn | undefined;
 
-  const isAuthRequired = !accountId || !hasTokens
+  const isAuthRequired = !accountId // || !hasTokens
   const buttonLabel = label || children
   const Component = component || Button
 

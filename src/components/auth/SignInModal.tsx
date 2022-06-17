@@ -41,7 +41,7 @@ const getModalContent = (kind: ModalKind, completedSteps: CompletedSteps) => {
         if (!hasTokens) {
           content.title = 'Wait a sec...'
           content.body = <OnBoardingButton onlyStep={StepsEnum.GetTokens} />
-          content.warn = 'You need some tokens to continue.'
+          content.warn = 'You need some tokens for some operations.'
           return content
         }
         return content;

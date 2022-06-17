@@ -47,7 +47,7 @@ export const SwapStart = ({
             <Section className="d4rk-swap-box">
             <h2 className="d4rk-swap-h2">Claim DARK</h2>
             <p className='d4rk-swap-desc'>
-              After network confirmation, your claimable and claimed transactions will list here.
+              After network confirmation, your claimable transactions and history will list here.
             </p>
             {/* <h3>{ address }</h3> */}
             <Claimable />

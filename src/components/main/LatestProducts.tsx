@@ -17,6 +17,7 @@ export const LatestProducts = (props: Props) => {
   }
 
   return <DataList
+  className='homeList-products'
     title={`Latest ${type}s`}
     dataSource={productsData}
     renderItem={(item) =>

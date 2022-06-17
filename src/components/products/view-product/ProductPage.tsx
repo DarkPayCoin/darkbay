@@ -4,7 +4,7 @@ import { HeadMeta } from '../../utils/HeadMeta';
 import { ProductData, ProductWithAllDetails } from '@darkpay/dark-types/dto';
 import ViewProductLink from '../ViewProductLink';
 import { CommentSection } from '../../comments/CommentsSection';
-import { ProductDropDownMenu, ProductCreator, HiddenProductAlert, ProductNotFound, ProductActionsPanel, isComment, useSubscribedProduct } from './helpers';
+import { ProductDropDownMenu, ProductCreator, HiddenProductAlert, ProductNotFound, ProductActionsPanel, isComment, useSubscribedProduct, ProductContent } from './helpers';
 import Error from 'next/error'
 import { NextPage } from 'next';
 import { getDarkdotApi } from 'src/components/utils/DarkdotConnect';
@@ -61,21 +61,47 @@ export const ProductPage: NextPage<ProductDetailsProps> = ({ productDetails: ini
   const goToCommentsId = 'comments'
 
   const renderResponseTitle = (parentProduct?: ProductData) => parentProduct && <>
-      In response to{' '}
+      Comment in response to{' '}
     <ViewProductLink storefront={storefrontStruct} product={parentProduct.struct} title={parentProduct.content?.title} />
   </>
 
   const titleMsg = isComment(struct.extension)
     ? renderResponseTitle(productDetails.ext?.product)
     : title
+    
+  const isAcomment =  isComment(struct.extension)
 
-const productPriceView = ((product.struct.price_usd as any)/100).toFixed(2)
+  const productPriceView = ((product.struct.price_usd as any)/100).toFixed(2)
+
+  // Tax, escrow, etc.
+  const bescrow = ((product.struct.buyer_esc_pct as any)/100).toFixed(2)
+  const sescrow = ((product.struct.seller_esc_pct as any)/100).toFixed(2)
+  const taxpct = ((product.struct.tax_pct as any)/100).toFixed(2)
+  const discountpct = ((product.struct.discount_pct as any)/100).toFixed(2) // TODO discount management
+
+// TODO ùake shipzones work!! see l55
 
 
   return <>
     <PageContent>
         <HeadMeta title={title} desc={mdToText(body)} image={image} canonical={canonical} tags={tags} />
+        {isAcomment
+         ? 
+         <div className='ProductDetails'>
+           <div className='FullProductDetailRow'>
+            <div className='titleFlex'>
+               <div className='titlePart'><h1 className='DfProductName'>{titleMsg}</h1></div>
+               <div className='menuPart'><ProductDropDownMenu productDetails={productDetails} storefront={storefrontStruct} withEditButton /></div>
+            </div>
+           </div>
+         <p className='ProductBody'><DfMd className='mt-3' source={body} /></p>
+         <ProductActionsPanel productDetails={productDetails} storefront={storefront.struct} />
+
+         </div>
+
+         :
     <div className='ProductMainInfo'>
+
         <HiddenProductAlert product={product.struct} />
         <div className='FullProductImageRow'>
         <img src={resolveIpfsUrl(image)} className='FullProductImage' /* add onError handler */ />
@@ -99,18 +125,23 @@ const productPriceView = ((product.struct.price_usd as any)/100).toFixed(2)
          
         <ProductActionsPanel productDetails={productDetails} storefront={storefront.struct} />
         </div>       
-      </div>
+      </div>}
 
+    {isAcomment
+      ?
+      null
+      :
 
       <div className='ProductDetails'>
                  <Descriptions title="Additional info" bordered>
-                   <Descriptions.Item label="Taxes" span={3}>20 %</Descriptions.Item>
+                   <Descriptions.Item label="Taxes" span={3}>%{taxpct}</Descriptions.Item>
                    {/* <Descriptions.Item label="Shipping cost" span={3}><ViewShipCost shipcost={(parseFloat(struct.shipsto.toString())/100)} /></Descriptions.Item> */}
                    <Descriptions.Item label="Ships to" span={3}>{shipzones}</Descriptions.Item>
-                   <Descriptions.Item label="Buyer escrow" span={3}>50%</Descriptions.Item>
-                   <Descriptions.Item label="Seller escrow" span={3}>50%</Descriptions.Item>
+                   <Descriptions.Item label="Buyer escrow" span={3}>% {bescrow}</Descriptions.Item> 
+                   <Descriptions.Item label="Seller escrow" span={3}>% {sescrow}</Descriptions.Item>
                  </Descriptions>
-        </div>
+        </div>      
+        }
 
         <div className='ProductDetails'>
             <div className="ant-descriptions-header"><div className="ant-descriptions-title">Feedback & comments</div></div>
