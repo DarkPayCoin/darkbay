@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useMyAccount } from "src/components/auth/MyAccountContext";
-import { Button, Spin, Table, Tag } from "antd";
+import { Spin, Table, Tag } from "antd";
 import Link from "next/link";
 import Section from "src/components/utils/Section";
-import { ShowD4rkWallet } from "./ShowD4rkWallet";
-import openNotification from "src/components/utils/OpenNotification";
-import { checkD4rkApi, getUserExists } from "../api/Check";
 import D4rkServiceAPI from "../api/D4rkService";
 
 
@@ -43,6 +39,8 @@ export const TxHistory : React.FC<TxHistoryProps> = () => {
         setIsLoading(true)
         console.log('fetching');
       //  setIsLoading(true) //set to true only when the api call is going to happen
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
         const data = await getTransactions().then(res => {
 
                 //  setTxData(Object.values(data))

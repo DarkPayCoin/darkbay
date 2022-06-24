@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useMutation } from "react-query";
 import Section from "src/components/utils/Section";
 import D4rkServiceAPI from "../api/D4rkService"
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button } from 'antd';
 import Router from 'next/router'
 import openNotification from "src/components/utils/OpenNotification";
 
@@ -87,7 +87,7 @@ const setPwd = (str: string) => {
     try {
       postD4rk();
     } catch (err) {
-      openNotification('An error occurred', err, 'bottomRight');
+      openNotification('An error occurred', fortmatResponse(err), 'bottomRight'); // Check err returned!
       setPostResult(fortmatResponse(err));
     }
   }

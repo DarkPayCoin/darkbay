@@ -4,7 +4,7 @@ import Router from 'next/router'
 import HeadMeta from '../utils/HeadMeta'
 import { getTxParams } from '../substrate'
 import { TxFailedCallback, TxCallback } from 'src/components/substrate/SubstrateTxButton'
-import { ProfileUpdate, OptionIpfsContent, IpfsContent } from '@darkpay/dark-types/substrate/classes'
+import { ProfileUpdate, OptionIpfsContent, IpfsContent, OptionText } from '@darkpay/dark-types/substrate/classes'
 import { IpfsCid } from '@darkpay/dark-types/substrate/interfaces'
 import { ProfileContent, AnyAccountId, ProfileData } from '@darkpay/dark-types'
 import { newLogger } from '@darkpay/dark-utils'
@@ -17,15 +17,15 @@ import { NAME_MIN_LEN, NAME_MAX_LEN, DESC_MAX_LEN } from 'src/config/Validations
 import { UploadAvatar } from '../uploader'
 import { resolveCidOfContent } from '@darkpay/dark-api/utils'
 import messages from 'src/messages'
-import { getB64PrivKey, getB64PubKey, getNewKeys } from '../utils/Encrypt'
-import { useCookies } from 'react-cookie';
-import { Collapse } from 'antd';
+// import { getB64PrivKey, getB64PubKey, getNewKeys } from '../utils/Encrypt'
+// import { useCookies } from 'react-cookie';
+// import { Collapse } from 'antd';
 import { useMyAccount } from '../auth/MyAccountContext'
 import * as openpgp from 'openpgp';
 
 
 
-const { Panel } = Collapse
+// const { Panel } = Collapse
 
 
 const log = newLogger('EditProfile')
@@ -90,7 +90,7 @@ const PgPCreateForm: React.FC<PgPCreateFormProps> = ({
   onCancel,
 }) => {
   const [form] = Form.useForm();
-  const { setAddress, state: { address } } = useMyAccount()
+  const { state: { address } } = useMyAccount()
 
 
   
@@ -234,7 +234,8 @@ console. log('priv : '+privbase64 + 'pub : '+pubbase64 )
       // Update only dirty values.
 
       const update = new ProfileUpdate({
-        content: new OptionIpfsContent(getCidIfChanged())
+        content: new OptionIpfsContent(getCidIfChanged()),
+        gpg: new OptionText('None')
       })
 
       return [ update ]

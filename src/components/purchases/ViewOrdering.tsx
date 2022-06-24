@@ -15,7 +15,6 @@ import { ViewOrderingProps } from './ViewOrderingProps';
 //import withLoadOrderingDataById from './withLoadOrderingDataById';
 //import AboutOrderingLink from './AboutOrderingLink';
 import ViewOrderingLink from './ViewOrderingLink';
-import { PageContent } from '../main/PageWrapper';
 import { DropdownMenu, ProductPreviewsOnOrdering, OrderingNotFound, OrderingBanner, isMyOrdering } from './helpers';
 //import { ContactInfo } from './SocialLinks/ViewSocialLinks';
 import { MutedSpan } from '../utils/MutedText';
@@ -23,7 +22,6 @@ import { BareProps } from '../utils/types';
 import { getPageOfIds } from '../utils/getIds';
 import { orderingIdForUrl } from '../urls';
 import ButtonLink from '../utils/ButtonLink';
-import { EditOutlined } from '@ant-design/icons';
 import { getOrderingId } from '../substrate';
 import { withLoadOrderingDataById } from './withLoadOrderingDataById';
 import { Badge } from 'antd';
@@ -49,11 +47,9 @@ export const ViewOrdering = (props: Props) => {
   }
 
   const {
-    preview = false,
-    nameOnly = false,
+
     withLink = true,
-    miniPreview = false,
-    dropdownPreview = false,
+
     productIds = [],
     products = [],
     onClick,
@@ -86,11 +82,14 @@ export const ViewOrdering = (props: Props) => {
   const OrderingNameAsLink = (props: BareProps) =>
     <ViewOrderingLink ordering={ordering} {...props} />
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
   const renderNameOnly = () =>
     withLink
       ? <OrderingNameAsLink />
       : <span>{orderingIdForUrl(ordering)}</span>
-
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
   const renderDropDownPreview = () =>
     <div className={`${primaryClass} DfPreview`}>
       <Banner />
@@ -98,7 +97,8 @@ export const ViewOrdering = (props: Props) => {
         <div className='handle'>{orderingName}</div>
       </div>
     </div>
-
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
   const renderMiniPreview = () =>
     <div className={'viewordering-minipreview'}>
       <div onClick={onClick} className={primaryClass}>

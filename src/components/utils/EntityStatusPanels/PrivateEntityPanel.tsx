@@ -1,7 +1,7 @@
-import { Product, Storefront } from '@darkpay/dark-types/substrate/interfaces'
+import { Storefront } from '@darkpay/dark-types/substrate/interfaces'
 import React from 'react'
 import { isMyAddress } from 'src/components/auth/MyAccountContext'
-import PrivateStorefrontButton from 'src/components/storefronts/PrivateStorefrontButton'
+import  { HiddenStorefrontButton } from 'src/components/storefronts/HiddenStorefrontButton'
 import { EntityStatusPanel, EntityStatusProps } from './EntityStatusPanel'
 
 type Props = EntityStatusProps & {
@@ -16,10 +16,10 @@ export const PrivateEntityPanel = ({
 }: Props) => {
 
   // If entity is not private or it's not my entity
-  if (!struct.private.valueOf() || !isMyAddress(struct.owner)) return null
+  if (!struct.hidden.valueOf() || !isMyAddress(struct.owner)) return null
 
   const PrivateButton = () => 
-    <PrivateStorefrontButton storefront={struct as Storefront} />
+    <HiddenStorefrontButton storefront={struct as Storefront} />
   
   return <EntityStatusPanel
     desc={`This ${type} is unlisted and only you can see it`}

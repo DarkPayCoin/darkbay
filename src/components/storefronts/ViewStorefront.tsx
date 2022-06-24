@@ -22,7 +22,6 @@ import { ViewStorefrontProps } from './ViewStorefrontProps';
 import withLoadStorefrontDataById from './withLoadStorefrontDataById';
 import AboutStorefrontLink from './AboutStorefrontLink';
 import ViewStorefrontLink from './ViewStorefrontLink';
-import { PageContent } from '../main/PageWrapper';
 import { DropdownMenu, ProductPreviewsOnStorefront, StorefrontNotFound, HiddenStorefrontAlert, StorefrontBanner, isMyStorefront } from './helpers';
 import { ContactInfo } from './SocialLinks/ViewSocialLinks';
 import { MutedSpan } from '../utils/MutedText';

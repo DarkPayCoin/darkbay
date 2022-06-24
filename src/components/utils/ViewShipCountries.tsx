@@ -1,6 +1,5 @@
 import { isEmptyArray, isEmptyStr, nonEmptyStr } from '@darkpay/dark-utils';
 import { Tag } from 'antd';
-import Link from 'next/link';
 import React from 'react';
 import { BaseProps } from '@polkadot/react-identicon/types';
 

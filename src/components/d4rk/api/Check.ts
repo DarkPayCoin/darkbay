@@ -8,7 +8,13 @@ export async function checkD4rkApi(): Promise<string> {
       return (json.data)
   }
   catch(error) {
-    return(error)
+    if (error instanceof Error) {
+      console.log(error.message);
+      return(error.message)
+    }
+    else {
+      return('Error checking if D4RK chain API is live!')
+    }
   }
 }
 
@@ -23,6 +29,12 @@ export async function getUserExists(usr: string): Promise<string> {
       return (json.data)
   }
   catch(error) {
-    return(error)
+    if (error instanceof Error) {
+      console.log(error.message);
+      return(error.message)
+    }
+    else {
+      return('Error checking if user exists in D4RK chain db!')
+    }
   }
 }

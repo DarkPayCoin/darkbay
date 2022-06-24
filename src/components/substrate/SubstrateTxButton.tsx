@@ -71,6 +71,8 @@ export function TxButton ({
 
   const { api, keyring, keyringState } = useSubstrate()
   const [ isSending, , setIsSending ] = useToggle(false)
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
   const { openSignInModal, state: { completedSteps: { hasTokens } } } = useAuth()
 
   const waitMessage = controlledMessage({

@@ -1,18 +1,12 @@
 import React, { useState } from 'react'
 import { HasStorefrontIdOrHandle } from '../urls'
-import { IconWithLabel } from '../utils'
 import { useAuth } from '../auth/AuthContext'
 import { ProductWithSomeDetails, ProductData } from '@darkpay/dark-types'
 import { ShoppingCartOutlined } from '@ant-design/icons'
-// import { ShareModal } from './ShareModal'
 import { Button, InputNumber, notification} from 'antd';
-
-//import { add, total } from './localstore' 
-//import { Cart,} from './CartUtils
 import { ProductId, StorefrontId } from '@darkpay/dark-types/substrate/interfaces'
 import { Option } from '@polkadot/types'
 import { AccountId } from '@polkadot/types/interfaces'
-// import { addShopping } from './action'
 import { useCart } from "react-use-cart";
 import { isMyAddress } from '../auth/MyAccountContext';
 

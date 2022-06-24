@@ -71,7 +71,11 @@ export const InnerUploadImg = ({ onChange, img, ImagePreview, ...props }: InnerU
           onChange(cid)
           setUrl(cid)
         } catch (err) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
           const error = err?.response?.data?.message
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
           error && setError(err.response.data.message)
           log.error('Failed upload image:', err)
         }

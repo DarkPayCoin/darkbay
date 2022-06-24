@@ -64,7 +64,7 @@ export function AuthProvider (props: React.PropsWithChildren<any>) {
   const [ onBoardedAccounts ] = useState<string[]>(store.get(ONBOARDED_ACCS) || [])
 
   const noOnBoarded = !address || !onBoardedAccounts.includes(address)
-  const [ showOnBoarding, setShowOnBoarding ] = useState(noOnBoarded)
+  const [ _showOnBoarding, setShowOnBoarding ] = useState(noOnBoarded)
   const [ showModal, setShowModal ] = useState<boolean>(false);
   const [ kind, setKind ] = useState<ModalKind>()
   const [ hasTokens, setTokens ] = useState(false)

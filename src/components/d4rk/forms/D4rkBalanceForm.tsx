@@ -1,18 +1,20 @@
 import React, {  useEffect, useState } from "react";
 import D4rkServiceAPI from "../api/D4rkService"
-import { useMyAccount, useMyAddress } from "src/components/auth/MyAccountContext";
+import { useMyAccount } from "src/components/auth/MyAccountContext";
 import Section from "src/components/utils/Section";
 
-import { Button, Form, Modal, InputNumber, Spin, Row, Col, Slider, Checkbox, Popover, Collapse } from 'antd';
+import { Button, Form, Modal, InputNumber, Spin, Row, Col, Slider, Checkbox, Popover } from 'antd';
 
 
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import openNotification from "src/components/utils/OpenNotification";
 import { ClockCircleOutlined, LockOutlined } from "@ant-design/icons";
-import Router from 'next/router'
 import { TxHistory } from "../utils/TxHistory";
 
 
+const fortmatResponse = (res: any) => {
+  return JSON.stringify(res, null, 2);
+};
 
 async function createLockTransaction(amount: number, recipient: string): Promise<boolean> {
   try {
@@ -25,7 +27,7 @@ async function createLockTransaction(amount: number, recipient: string): Promise
   catch(error) {
     console.log('@@@ ERROR LOCK TX ' + amount +' D4RK');
     console.log(error)
-    openNotification('Transaction failed', error, 'bottomRight');
+    openNotification('Transaction failed', fortmatResponse(error), 'bottomRight');
     return false
   }
 }
@@ -155,7 +157,7 @@ const disclaimer = "THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF AN
 
 export const D4rkBalanceForm: React.FC = () => {
   const [visible, setVisible] = useState(false);
-  const [txStatus, setTxStatus] = useState(false);
+  const [_txStatus, setTxStatus] = useState(false);
   const [d4rkBalance, setD4rkBalance] = useState('0.00');
   const [isLoading, setisLoading] = useState(false); //Set initial value to false to avoid your component in loading state if the first call fails
   const { state: { address } } = useMyAccount()
@@ -176,9 +178,10 @@ export const D4rkBalanceForm: React.FC = () => {
 // get balance
   const fetchBalance = async () => {
     setisLoading(true) //set to true only when the api call is going to happen
-    const data = await getBalance().then(data => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const _getdata = await getBalance().then(data => {
       setD4rkBalance(data)
-      // alert(data);
     })
     setisLoading(false); //make sure to set it to false so the component is not in constant loading state
   }
@@ -196,7 +199,7 @@ export const D4rkBalanceForm: React.FC = () => {
     }
     catch(err) {
       console.log(err)
-      openNotification('ERROR', err, 'bottomRight')
+      openNotification('ERROR', fortmatResponse(err), 'bottomRight')
     }
   }
   };

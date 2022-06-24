@@ -1,8 +1,4 @@
-import React, { useState, useEffect } from "react";
-
-
-
-
+import React from 'react';
 import Section from '../../utils/Section';
 import CreateD4rkAccount from './CreateD4rkAccount';
 

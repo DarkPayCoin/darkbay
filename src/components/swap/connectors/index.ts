@@ -10,6 +10,8 @@ const RPC_URLS = {
 export const network = new NetworkConnector({
   urls: { 1: RPC_URLS[1], 4: RPC_URLS[4] },
   defaultChainId: 1,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   pollingInterval: POLLING_INTERVAL,
 });
 

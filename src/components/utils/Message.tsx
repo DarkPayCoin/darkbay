@@ -40,7 +40,7 @@ export const resolveNotififcation = (type: IconType, props: MessageProps) => {
   const { message: content, duration = null, ...messageProps } = props
 
   return isMobileDevice
-    ? message.open({ content, type, duration, style: { fontSize: '1rem' }, ...messageProps })
+    ? message.open({ content, type, style: { fontSize: '1rem' }, ...messageProps })
     : notification.open({ type, ...props })
 }
 

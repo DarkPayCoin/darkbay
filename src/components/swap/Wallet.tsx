@@ -35,7 +35,11 @@ export const Wallet = () => {
   //   [ 0x00001, JSONABI ]
   // ]
   const ABIs = useMemo(() => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     return (TOKENS_BY_NETWORK[chainId] || []).map<[string, any]>(
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
       ({ address, abi }) => [address, abi]
     )
   }, [chainId])
@@ -73,9 +77,15 @@ export const Wallet = () => {
       )}
 
       {active && (
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
         <SWRConfig value={{ fetcher: fetcher(library, new Map(ABIs)) }}>
 
-          <TokenList chainId={chainId} />
+
+          <TokenList 
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          chainId={chainId} />
         </SWRConfig>
       )}
 

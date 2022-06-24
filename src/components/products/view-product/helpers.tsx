@@ -330,6 +330,8 @@ export const InfoProductPreview: React.FunctionComponent<ProductPreviewProps> = 
   const { title, body } = productContent
   const productPriceView = ((product.price_usd as any)/100).toFixed(2)
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const summar = summarize(body)
 
 

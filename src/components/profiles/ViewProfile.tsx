@@ -185,6 +185,8 @@ const ProfilePage: NextPage<Props> = (props) => {
     name,
     avatar,
     about,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     gpg
   } = owner?.content || {} as ProfileContent;
 

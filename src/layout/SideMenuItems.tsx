@@ -1,5 +1,5 @@
 import { accountUrl } from 'src/components/urls'
-import { SearchOutlined, RadarChartOutlined, AlertOutlined, HeartOutlined, UserOutlined, ShopOutlined, ShoppingOutlined, ShoppingCartOutlined, PlusOutlined, DeploymentUnitOutlined, WalletOutlined } from '@ant-design/icons'
+import { SearchOutlined, RadarChartOutlined, AlertOutlined, HeartOutlined, UserOutlined, ShopOutlined, ShoppingOutlined, ShoppingCartOutlined, PlusOutlined, WalletOutlined } from '@ant-design/icons'
 import { uiShowAdvanced, advancedUrl, uiShowNotifications } from 'src/components/utils/env'
 import React from 'react'
 
@@ -90,11 +90,11 @@ export const buildAuthorizedMenu = (myAddress: string): MenuItem[] => {
       page: [ '/storefronts/new', '/storefronts/new' ],
       icon: <PlusOutlined />
     },
-    {
-      name: 'Swap',
-      page: [ '/accounts/[address]/swap', accountUrl(account, 'swap') ],
-      icon: <DeploymentUnitOutlined />
-    },
+    // {
+    //   name: 'Swap',
+    //   page: [ '/accounts/[address]/swap', accountUrl(account, 'swap') ],
+    //   icon: <DeploymentUnitOutlined />
+    // },
     // {
     //   name: 'Customers orders',
     //   page: [ '/accounts/[address]/sales', accountUrl(account) ],

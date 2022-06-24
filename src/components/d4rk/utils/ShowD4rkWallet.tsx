@@ -1,17 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AnyAccountId } from '@darkpay/dark-types';
+import React, { useEffect, useState } from "react";
 import D4rkServiceAPI from "../api/D4rkService"
-import { useMyAccount, useMyAddress } from "src/components/auth/MyAccountContext";
-import Link from "next/link";
+import { useMyAccount } from "src/components/auth/MyAccountContext";
 import D4rkWalletForm from "../forms/D4rkWalletForm";
 import Section from "src/components/utils/Section";
 import D4rkBalanceForm from "../forms/D4rkBalanceForm";
 // import UnlockD4rkWallet from "./UnlockD4rkWallet";
-import { Button, notification, Divider, Space, Form, Input, Modal, Radio } from 'antd';
+import { Button, notification, Form, Input, Modal } from 'antd';
 import type { NotificationPlacement } from 'antd/lib/notification';
-import { useMutation } from "react-query";
 
-import Router from 'next/router'
 
 
 const openNotification = (message: string, description: string, placement: NotificationPlacement) => {
@@ -62,6 +58,10 @@ async function checkIfLoggedInAndSameUser(address?: string): Promise<boolean> {
   }
 }
 
+const fortmatResponse = (res: any) => {
+  return JSON.stringify(res, null, 2);
+};
+
 async function getUserExists(usr: string): Promise<string> {
   try {
     const response = await D4rkServiceAPI.userExists(
@@ -73,7 +73,7 @@ async function getUserExists(usr: string): Promise<string> {
       return (json.data)
   }
   catch(error) {
-    return(error)
+    return(fortmatResponse(error))
   }
 }
 
@@ -128,7 +128,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   onCancel,
 }) => {
   const [form] = Form.useForm();
-  const { setAddress, state: { address } } = useMyAccount()
+  const {  state: { address } } = useMyAccount()
   return (
     <Modal
       visible={visible}
@@ -187,13 +187,17 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 
 export const ShowD4rkWallet: React.FC = () => {
   const [visible, setVisible] = useState(false);
-  const { setAddress, state: { address } } = useMyAccount()
+  const {  state: { address } } = useMyAccount()
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const [d4rkExists, setD4rkExists] = useState(false);
   const [d4rkUnlocked, setD4rkUnlocked] = useState(false);
 
 
 // get user if is one
 const checkUser = async (address: any) => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const data = await getUserExists(address)
    .then((data: any) => {
      if(data == true) {
@@ -220,7 +224,9 @@ const checkUser = async (address: any) => {
   useEffect(() => {
     console.log('Watching address: ', address);
     const exists = checkUser(address);
-    if(exists) 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if(exists)  // TODO : check as TS says it always returns TRUE :/
     checkIfLoggedInAndSameUser(address).then(result => {
       setD4rkUnlocked(result);
       console.log('useEffect says checkIfLoggedInAndSameUser : '+result)

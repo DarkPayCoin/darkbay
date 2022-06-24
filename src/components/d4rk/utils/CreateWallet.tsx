@@ -18,6 +18,8 @@ export const CreateWallet : React.FC<CreateWalletProps> = () => {
 
   // check D4RK API state
 const checkAPI = async () => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const data = await checkD4rkApi()
    .then((data: any) => {
      //alert(data)
@@ -41,6 +43,8 @@ const checkAPI = async () => {
   
 // get user if is one
 const checkUser = async (address: any) => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const data = await getUserExists(address)
    .then((data: any) => {
      if(data.message === 'Network Error') {

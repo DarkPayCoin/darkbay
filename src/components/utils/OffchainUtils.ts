@@ -39,6 +39,8 @@ const axiosRequest = async (url: string) => {
 const getActivity = async (url: string, offset: number, limit: number): Promise<Activity[]> => {
   try {
     const res = await axiosRequest(`${url}?offset=${offset}&limit=${limit}`)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const { data } = res
     return data
   } catch (err) {
@@ -50,6 +52,8 @@ const getActivity = async (url: string, offset: number, limit: number): Promise<
 const getCount = async (url: string): Promise<number> => {
   try {
     const res = await axiosRequest(`${url}/count`)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const { data } = res
     return data
   } catch (err) {
@@ -101,6 +105,8 @@ export const getStorefrontActivitiesCount = async (myAddress: string) =>
 export const getActivityCounts = async (address: string): Promise<Counts> => {
   try {
     const res = await axiosRequest(`${createActivityUrlByAddress(address, 'counts')}`)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const { data } = res
     return data
   } catch (err) {

@@ -4,7 +4,7 @@ import { HeadMeta } from '../../utils/HeadMeta';
 import { ProductData, ProductWithAllDetails } from '@darkpay/dark-types/dto';
 import ViewProductLink from '../ViewProductLink';
 import { CommentSection } from '../../comments/CommentsSection';
-import { ProductDropDownMenu, ProductCreator, HiddenProductAlert, ProductNotFound, ProductActionsPanel, isComment, useSubscribedProduct, ProductContent } from './helpers';
+import { ProductDropDownMenu, ProductCreator, HiddenProductAlert, ProductNotFound, ProductActionsPanel, isComment, useSubscribedProduct } from './helpers';
 import Error from 'next/error'
 import { NextPage } from 'next';
 import { getDarkdotApi } from 'src/components/utils/DarkdotConnect';
@@ -77,6 +77,8 @@ export const ProductPage: NextPage<ProductDetailsProps> = ({ productDetails: ini
   const bescrow = ((product.struct.buyer_esc_pct as any)/100).toFixed(2)
   const sescrow = ((product.struct.seller_esc_pct as any)/100).toFixed(2)
   const taxpct = ((product.struct.tax_pct as any)/100).toFixed(2)
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const discountpct = ((product.struct.discount_pct as any)/100).toFixed(2) // TODO discount management
 
 // TODO ùake shipzones work!! see l55

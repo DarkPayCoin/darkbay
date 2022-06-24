@@ -6,7 +6,7 @@ import { Form, Input, Select } from 'antd'
 import BN from 'bn.js'
 import { getNewIdFromEvent, getTxParams } from '../substrate'
 import { TxFailedCallback, TxCallback } from 'src/components/substrate/SubstrateTxButton'
-import {  OrderingState, IpfsContent, } from '@darkpay/dark-types/substrate/classes'
+import {  IpfsContent } from '@darkpay/dark-types/substrate/classes'
 import { IpfsCid } from '@darkpay/dark-types/substrate/interfaces'
 import { OrderingContent } from '@darkpay/dark-types'
 import {  newLogger } from '@darkpay/dark-utils'
@@ -18,9 +18,8 @@ import { Countries } from '../utils/Countries'
 import { getNonEmptyOrderingContent } from "../utils/content";
 import { HeadMeta } from "../utils/HeadMeta";
 import ShippingViewCart from "./ShippingViewCart";
-import Item from "antd/lib/list/Item";
 import ButtonLink from "../utils/ButtonLink";
-// import EmptyCart from "./EmptyCart";
+
 
 
 

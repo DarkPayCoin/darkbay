@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import useDarkdotEffect from '../../api/useDarkdotEffect'
-import NoData from '../../utils/EmptyList'
 import { useMyAddress } from '../../auth/MyAccountContext'
 import { getNewIdFromEvent } from '../../substrate'
 import { Button, Modal, Spin, Table } from 'antd'
@@ -17,70 +16,28 @@ import openNotification from 'src/components/utils/OpenNotification'
 
 
 
-export const NoClaimable = React.memo(() =>
-  <NoData description='No claimable tokens yet.' />
-)
+type GlobalSettingsProps = React.PropsWithChildren<{}>
 
-type ClaimableProps = React.PropsWithChildren<{}>
-
-interface Claimable {
-  key: number;
-  d4rktx: string;
-  amount: number;
-  claimed: boolean;
+interface GlobalSettings {
+  swaps_allowed: boolean;
+  min_amount: number;
+  max_amount: number;
 }
 
 
 
 
-//export const Claimable = ({ children }: ClaimableProps) => {
-export const Claimable: React.FC<ClaimableProps> = () => {
+//export const GlobalSettings = ({ children }: GlobalSettingsProps) => {
+export const GlobalSettings: React.FC<GlobalSettingsProps> = () => {
   const myAddress = useMyAddress()
   
-  const [ claimableData, setClaimableData ] = useState([{}]); 
+  const [ globalsettingsData, setGlobalSettingsData ] = useState([{}]); 
   const [ claimedData, setClaimedData ] = useState([{}]); 
 
   const [ isLoading, setisLoading ] = useState(false)
   const [isHistoryModalVisible, setIsHistoryModalVisible] = useState(false);
   const [apiOK, setApiOK] = useState(true); // toinit a first call
 
-
-  // check D4RK API state
-  const checkAPI = async () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const data = await checkD4rkApi()
-     .then((data: any) => {
-       //alert(data)
-       if(data.message === 'Network Error') {
-         setApiOK(false)
-         openNotification('Network error', 'D4RK API is unavailable. Please try again later.', 'bottomRight')
-       }
-       if(data == 'v1') {
-        setApiOK(true)
-       }
-       if(data.message === 'Request failed with status code 400') {
-        //setMustCreate(true)
-         }
-    })
-    .catch(error => { openNotification('Network error', 'D4RK API is unavailable. Please try again later.', 'bottomRight'); setApiOK(false) })
-    .finally(() => {})
-     //make sure to set it to false so the component is not in constant loading state
-  }
-
-
-
-  const showModal = () => {
-    setIsHistoryModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsHistoryModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsHistoryModalVisible(false);
-  };
 
   
   useDarkdotEffect(({ substrate }) => {
@@ -90,15 +47,13 @@ export const Claimable: React.FC<ClaimableProps> = () => {
     var claimedArray = [{}];
 
     const load = async () => {
-      checkAPI();
-      if(apiOK) {
       const api = await substrate.api
       setisLoading(true)
 
       const txIdsList = await api.query.swap.swapIdsByOwner(myAddress);
       const txIdsListJson = JSON.parse(JSON.stringify(txIdsList))
 
-      let claimableKey: number = 1;
+      let globalsettingsKey: number = 1;
       let claimedKey: number = 1;
 
 
@@ -113,20 +68,20 @@ export const Claimable: React.FC<ClaimableProps> = () => {
           claimedArray.push({ key: claimedKey, id: txToJson['id'], txid: txToJson['d4rktx'], amount: txToJson['amount'], claimed: txToJson['claimed'] })
           claimedKey ++;
         }
-        // claimable
+        // globalsettings
         // else if(txToJson['id'] > 14 && txToJson['amount'] > 0 && txToJson['claimed'] === false) {
        else if(txToJson['id'] > 0 && txToJson['claimed'] === false) {
-          newStateArray.push({key: claimableKey, id: txToJson['id'], txid: txToJson['d4rktx'], amount: txToJson['amount'], claimed: txToJson['claimed'] })
-          claimableKey ++;
+          newStateArray.push({key: globalsettingsKey, id: txToJson['id'], txid: txToJson['d4rktx'], amount: txToJson['amount'], claimed: txToJson['claimed'] })
+          globalsettingsKey ++;
         }
       }
-    }
+    
 
 
 
       console.warn(newStateArray)
       newStateArray.shift()
-      setClaimableData(newStateArray);
+      setGlobalSettingsData(newStateArray);
 
       console.warn(claimedArray)
       claimedArray.shift()
@@ -256,9 +211,9 @@ if(isLoading) {
     return <Spin />
 }
 
-  return claimableData
+  return globalsettingsData
     ? <>
-      <Table columns={columns} dataSource={claimableData} pagination={{ hideOnSinglePage: true, pageSize: 5, showSizeChanger: false }} />
+      <Table columns={columns} dataSource={globalsettingsData} pagination={{ hideOnSinglePage: true, pageSize: 5, showSizeChanger: false }} />
       <Section className="text-centered padded-top">
       <Button type="text" 
         onClick={() =>  showModal()}
@@ -273,5 +228,5 @@ if(isLoading) {
       </Modal>
   </Section>
     </>
-    : <NoClaimable />
+    : <NoGlobalSettings />
 }
