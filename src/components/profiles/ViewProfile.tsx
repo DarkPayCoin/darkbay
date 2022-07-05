@@ -139,12 +139,12 @@ const Component = (props: Props) => {
                   <span className='DfBlackLink'>{address}</span>
                 </CopyAddress>
               },
-              {
-                label: 'Dark Key',
-                value: <CopyAddress address={gpg}>
-                  <span className='DfBlackLink'>{gpg}</span>
-                </CopyAddress>
-              },
+              // {
+              //   label: 'Dark Key',
+              //   value: <CopyAddress address={gpg}>
+              //     <span className='DfBlackLink'>{gpg}</span>
+              //   </CopyAddress>
+              // },
               {
                 label: 'Balance',
                 value: <Balance address={address} />

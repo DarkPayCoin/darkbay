@@ -22,6 +22,10 @@ import messages from 'src/messages'
 // import { Collapse } from 'antd';
 import { useMyAccount } from '../auth/MyAccountContext'
 import * as openpgp from 'openpgp';
+import Section from '../utils/Section'
+import { Divider, Typography } from 'antd';
+
+const { Text } = Typography;
 
 
 
@@ -53,16 +57,15 @@ async function createD4rkPGP(username: string, password: string): Promise<D4rkPG
   console.log(publicKey);      // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
   console.log(revocationCertificate); // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
 
-  let Privbuff = Buffer.from(privateKey, 'base64')
-  let Pubbuff = Buffer.from(publicKey, 'base64')
-  let revbuff = Buffer.from(revocationCertificate, 'base64')
-
+  let Privbuff = Buffer.from(privateKey, 'utf8')
+  let Pubbuff = Buffer.from(publicKey, 'utf8')
+  let revbuff = Buffer.from(revocationCertificate, 'utf8')
 
   return { privateKey: Privbuff.toString('hex'), publicKey: Pubbuff.toString('hex'), revocationCertificate: revbuff.toString('hex') }
 
   }
   catch(error) {
-    console.log('@@@ ERROR LOGIN user ' + username);
+    console.log('@@@ ERROR PGP user ');
     console.log(error)
     openNotification('PGP error','There was an error generating your keys, please try again.','bottomRight');
     return { privateKey: '', publicKey: '', revocationCertificate:''}
@@ -188,18 +191,24 @@ export function InnerForm (props: FormProps) {
   const [ form ] = Form.useForm()
   const { ipfs } = useDarkdotApi()
   const [ IpfsCid, setIpfsCid ] = useState<IpfsCid>()
-
+  const [ DarkPubKey, setDarkPubKey ] = useState("")
+  const [ DarkPrivKey, setDarkPrivKey ] = useState("")
   const { owner, address } = props
   const isProfile = owner?.profile
   const initialValues = getInitialValues(props)
 
   const [visible, setVisible] = useState(false);
 
+  // on key creation
   const onCreate = async (values: any) => {
     console.log('Received values of PGP form: ', values);
     const keys = await createD4rkPGP(values.username, values.password);
-    const privbase64 = Buffer.from(keys.privateKey, 'hex').toString('base64');
-    const pubbase64 = Buffer.from(keys.publicKey, 'hex').toString('base64');
+    const privbase64 = Buffer.from(keys.privateKey, 'hex').toString('ascii');
+    const pubbase64 = Buffer.from(keys.publicKey, 'hex').toString('ascii');
+
+    setDarkPubKey(keys.publicKey)
+    setDarkPrivKey(keys.privateKey)
+    form.setFieldsValue({ [fieldName('gpg')]: keys.publicKey })
 
 console.log(keys)  
 console.log('------ decoded hex keys -----------' )
@@ -215,7 +224,7 @@ console. log('priv : '+privbase64 + 'pub : '+pubbase64 )
   }
 
   const newTxParams = (cid: IpfsCid) => {
-    // const fieldValues = getFieldValues()
+     const fieldValues = getFieldValues()
 
     // /** Returns `undefined` if value hasn't been changed. */
     // function getValueIfChanged (field: FieldName): any | undefined {
@@ -228,14 +237,16 @@ console. log('priv : '+privbase64 + 'pub : '+pubbase64 )
       return prevCid !== cid.toString() ? cid : undefined
     }
 
+    console.log(fieldValues['gpg'])
+
     if (!isProfile) {
-      return [ new IpfsContent(cid) ];
+      return [ new IpfsContent(cid), fieldValues['gpg'] ];
     } else {
       // Update only dirty values.
 
       const update = new ProfileUpdate({
         content: new OptionIpfsContent(getCidIfChanged()),
-        gpg: new OptionText('None')
+        gpg: new OptionText(fieldValues['gpg'])
       })
 
       return [ update ]
@@ -274,6 +285,10 @@ console. log('priv : '+privbase64 + 'pub : '+pubbase64 )
 
   const onAvatarChanged = (url?: string) => {
     form.setFieldsValue({ [fieldName('avatar')]: url })
+  }
+
+  const onPubKeyChanged = (gpg: string) => {
+    form.setFieldsValue({ [fieldName('gpg')]: gpg })
   }
 
 //   const crypto = require('crypto');
@@ -385,15 +400,59 @@ console. log('priv : '+privbase64 + 'pub : '+pubbase64 )
         <DfMdEditor onChange={onDescChanged} />
       </Form.Item>
 
+      {/* <Form.Item
+        name={fieldName('gpg')}
+        label='Dark PubKey'
+      >
+        <Input placeholder={DarkPubKey} value={DarkPubKey}  />
+      </Form.Item> */}
 
+
+      {/* <Form.Item
+        name={fieldName('gpg')}
+        label='Dark PrivKey'
+      >
+        <Input placeholder={DarkPrivKey} />
+      </Form.Item> */}
+
+{ DarkPubKey
+? 
+<Section>
+<Form.Item
+name={fieldName('gpg')}
+label='Dark PubKey'
+>
+<Input placeholder={DarkPubKey} value={DarkPubKey} readOnly />
+</Form.Item>
+
+<Section className="DarkPrivBox">
+<Alert
+      message="Save your password and key"
+      description="Your keys are generated client-side (in your browser) and there is no way to recover if you loose them."
+      type="warning"
+      showIcon
+      closable={false}
+    />
+     <Text code>{DarkPrivKey}</Text>
+  
+  
+  </Section>
+
+
+
+</Section>
+:
+<Section className="d4rk-swap-desc spaced-top padded-top">
+  <p className="d4rk-swap-desc ">Please generate your PGP keys first, they will be used to encrypt your data. Once done you can save your profile.</p>
       <Button
          type="primary"
          onClick={() => {
            setVisible(true);
          }}
        >
-         Create DARK keys
+         {isProfile? <span>Generate new keys</span> : <span>Generate my keys</span>}
        </Button>
+
        <PgPCreateForm
          visible={visible}
          onCreate={onCreate}
@@ -401,6 +460,10 @@ console. log('priv : '+privbase64 + 'pub : '+pubbase64 )
          setVisible(false);
          }}
        />
+</Section>
+}
+
+
 
 {/* 
       <Collapse accordion>
@@ -428,7 +491,8 @@ console. log('priv : '+privbase64 + 'pub : '+pubbase64 )
       </Panel>
         </Collapse> */}
 
-      <DfFormButtons
+<Section className="spaced-top padded-top">
+<DfFormButtons
         form={form}
         txProps={{
           label: isProfile
@@ -442,7 +506,12 @@ console. log('priv : '+privbase64 + 'pub : '+pubbase64 )
           onFailed
         }}
       />
+</Section>
+
     </DfForm>
+
+
+
 
   </>
 }
