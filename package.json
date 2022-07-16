@@ -67,8 +67,8 @@
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@darkpay/bitcore-wallet-client": "^6.8.1",
-    "@darkpay/dark-api": "^0.14.1-5.12",
-    "@darkpay/dark-types": "^0.14.1-5.12",
+    "@darkpay/dark-api": "^0.14.1-5.13",
+    "@darkpay/dark-types": "^0.14.1-5.13",
     "@darkpay/dark-utils": "^0.14.1-5.1",
     "@ethersproject/providers": "^5.6.0",
     "@open-wc/webpack-import-meta-loader": "^0.4.7",

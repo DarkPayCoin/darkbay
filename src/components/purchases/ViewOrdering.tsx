@@ -24,7 +24,7 @@ import { orderingIdForUrl } from '../urls';
 import ButtonLink from '../utils/ButtonLink';
 import { getOrderingId } from '../substrate';
 import { withLoadOrderingDataById } from './withLoadOrderingDataById';
-import { Badge } from 'antd';
+import { Badge, Descriptions } from 'antd';
 //import { EntityStatusGroup, PendingOrderingOwnershipPanel } from '../utils/EntityStatusPanels';
 
 // import { OrderingHistoryModal } from '../utils/ListsEditHistory';
@@ -68,10 +68,11 @@ export const ViewOrdering = (props: Props) => {
   const { } = orderingData?.content || {} as OrderingContent
 
 
+
   const order_total = parseFloat(orderingData.struct.ordering_total.toString()).toFixed(2)
 
 
-  const orderingName = isEmptyStr(ordering.id) ? <MutedSpan>{'<Unnamed Ordering>'}</MutedSpan> : 'Order #' + (ordering.id)
+  const orderingName = isEmptyStr(ordering.id) ? <MutedSpan>{'<Unnamed Ordering>'}</MutedSpan> : 'Purchase #' + (ordering.id)
 
   const Banner = useCallback(() => <OrderingBanner ordering={ordering} address={owner} size={imageSize} />, [])
 
@@ -132,19 +133,23 @@ export const ViewOrdering = (props: Props) => {
             </span>
           </div>
 
-        <Collapse accordion>
-    <Panel header="Other details" key={ordering.id.toString()}>
-    <div className='d-flex justify-content-between'>Seller: {ordering.seller.toHuman()}</div>
+        <Collapse accordion className="spaced-top padded-top">
+    <Panel header="Purchase details" key={ordering.id.toString()}>
 
-        <h5 className='header'>Delivery address :</h5>
-        <span className='d-flex align-items-center'>{orderingData.content?.name}</span>
-        <span className='d-flex align-items-center'>{orderingData.content?.address1}</span>
-        <span className='d-flex align-items-center'>{orderingData.content?.address2}</span>
-        <span className='d-flex align-items-center'>{orderingData.content?.postal_code} - {orderingData.content?.city}</span>
-        <span className='d-flex align-items-center'>{orderingData.content?.country}</span>
-        <span className='d-flex align-items-center'>{orderingData.content?.memo}</span>
+    <Descriptions title="Seller info">
+    <Descriptions.Item label="Seller ID">{ordering.seller.toHuman()} / {ordering.storefront_id.toHuman()}</Descriptions.Item>
+      </Descriptions>
+
         {/* <span className='d-flex align-items-center'>{orderingData.content?.pIds}</span> */}
-        <ProductPreviewsOnOrdering orderingData={orderingData} products={products} productIds={productIds} />
+        {/* <ProductPreviewsOnOrdering orderingData={orderingData} products={products} productIds={orderingData.content?productIds} /> */}
+        <Descriptions title="Delivery Info">
+    <Descriptions.Item label="Name">{orderingData.content?.name}</Descriptions.Item>
+    <Descriptions.Item label="Address">
+    {orderingData.content?.address1} {orderingData.content?.address2} {orderingData.content?.postal_code} - {orderingData.content?.city}
+    </Descriptions.Item>
+    <Descriptions.Item label="Country">{orderingData.content?.country}</Descriptions.Item>
+    <Descriptions.Item label="Note">{orderingData.content?.memo}</Descriptions.Item>
+  </Descriptions>
 
         </Panel>
         </Collapse>
@@ -154,13 +159,12 @@ export const ViewOrdering = (props: Props) => {
 
 
   return <>
-             <Section className='d-flex justify-content-between'>
+      {/* <Section className='d-flex justify-content-between'>
                <span>Id</span>
                <span>Total</span>
                <span>Order state</span>
-
-</Section>
-      <Segment>{renderPreview()}</Segment>
+      </Section> */}
+      <Segment className="spaced-top">{renderPreview()}</Segment>
 
   </>
 }

@@ -24,6 +24,7 @@ const getPublicProductsCount = (ordering: Ordering): number =>
 
 export const ProductPreviewsOnOrdering = (props: Props) => {
   const { orderingData, products, productIds } = props
+  console.warn(props)
   const { struct: ordering } = orderingData
   const publicProductsCount = getPublicProductsCount(ordering)
   const { isApiReady, darkdot } = useDarkdotApi()

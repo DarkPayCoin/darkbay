@@ -20,7 +20,7 @@ import { HeadMeta } from "../utils/HeadMeta";
 import ShippingViewCart from "./ShippingViewCart";
 import ButtonLink from "../utils/ButtonLink";
 
-
+import Router, { useRouter } from 'next/router'
 
 
 const log = newLogger('Checkout')
@@ -102,7 +102,7 @@ export function InnerForm (props: FormProps) {
 
       // TODO
 //      return [ sfId, new IpfsContent(cid), Number(order_total), seller, Number(bescrow), Number(sescrow), pids  ]
-return [ sfId, new IpfsContent(cid), Number(order_total), seller, Number(bescrow), Number(sescrow) ]
+return [ Number(sfId), new IpfsContent(cid), Number(order_total), seller, Number(bescrow), Number(sescrow) ]
 
   }
 
@@ -137,8 +137,8 @@ log.warn(pIds);
 
 
   const goToView = (orderingId: BN) => {
-    // Router.push('/[orderingId]', `/${orderingId}`)
-    //   .catch(err => log.error(`Failed to redirect to a storefront page. ${err}`))
+    Router.push('/purchases')
+      .catch(err => log.error(`Failed to redirect to a storefront page. ${err}`))
     log.warn('$$$$$$$$$ ORdering ID === ' + orderingId);
     let metaCart : any = metadata
     
@@ -264,12 +264,13 @@ log.warn(pIds);
 
       <Form.Item
         style={{ marginTop: "2rem" }}
+        hidden
               >
         <Input
          // This is where you want to disable your UI control
          disabled={true}
          placeholder={pIds.toString()}        />
-</Form.Item>
+    </Form.Item>
 
  {/*
       {/* <Form.Item

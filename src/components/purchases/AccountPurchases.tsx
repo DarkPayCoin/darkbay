@@ -54,7 +54,7 @@ export const useLoadAccoutPublicOrderings = (address = useMyAddress()): LoadOrde
 
     }
 
-    loadMyOrderings().catch((err) => log.error('Failed load my orderings. Error: %', err))
+    loadMyOrderings().catch((err) => log.error('Failed load my purchases. Error: %', err))
 
   }, [ address ])
 
@@ -91,11 +91,11 @@ const PublicOrderings = (props: LoadOrderingsProps) => {
   //   : null
 
   return <PaginatedTable
-    title={'My Orderings'}
+    title={'My Purchases'}
     totalCount={totalCount}
     dataSource={orderingsData}
     renderItem={OrderingPreview}
-    noDataDesc='No public orderings found'
+    noDataDesc='No purchases found'
     noDataExt={noOrderings && isMy}
   />
 }
@@ -107,7 +107,7 @@ export const AccountOrderings = ({ myOrderingIds, withTitle = true, ...props}: P
     ? { myOrderingIds, withTitle, ...props } as LoadOrderingsProps
     : useLoadAccoutPublicOrderings(props.address)
 
-  if (!state) return <Loading label='Loading public orderings'/>
+  if (!state) return <Loading label='Loading purchasess'/>
 
   log.warn(myOrderingIds)
 
@@ -117,7 +117,7 @@ export const AccountOrderings = ({ myOrderingIds, withTitle = true, ...props}: P
 }
 
 export const AccountOrderingsPage: NextPage<Props> = (props: Props) => <>
-  <HeadMeta title='Orderings' desc={`Darkdot orderings owned by ${props.address}`} />
+  <HeadMeta title='My purchases' desc={`Darkdot purchases owned by ${props.address}`} />
   <AccountOrderings {...props} />
 </>
 
@@ -148,7 +148,7 @@ export const ListMyOrderings = () => {
 
   return state
     ? <AccountOrderings {...state} />
-    : <Loading label='Loading your orderings' />
+    : <Loading label='Loading your purchases' />
 }
 
 export default AccountOrderingsPage

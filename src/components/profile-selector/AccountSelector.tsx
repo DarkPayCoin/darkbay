@@ -10,6 +10,7 @@ import { useAuth } from '../auth/AuthContext';
 import SubTitle from '../utils/SubTitle';
 
 import styles from './AccountSelector.module.sass'
+import { useCart } from 'react-use-cart';
 
 type SelectAccountItems = {
   accounts: string[],
@@ -21,6 +22,10 @@ const SelectAccountItems = ({ accounts: addresses, profilesByAddressMap, withSho
   const { setAddress, state: { address } } = useMyAccount()
   const { hideSignInModal } = useAuth()
 
+  const {
+    emptyCart
+} = useCart();
+
   const AccountItem = useCallback((item: string) => <div
     key={item.toString()}
     className='SelectAccountItem'
@@ -28,6 +33,7 @@ const SelectAccountItems = ({ accounts: addresses, profilesByAddressMap, withSho
     onClick={async () => {
       await hideSignInModal()
       await setAddress(item)
+      await emptyCart
     }}
   >
     <SelectAddressPreview address={item} owner={profilesByAddressMap.get(item)} withShortAddress={withShortAddress} />

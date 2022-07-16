@@ -10,6 +10,9 @@ import { GenericAccountId, Option } from '@polkadot/types'
 import { resolveCidOfContent } from '@darkpay/dark-api/utils';
 import registry from '@darkpay/dark-types/substrate/registry';
 
+import { CartProvider } from "react-use-cart";
+
+
 const log = newLogger('MyAccountContext')
 
 function print (x?: any): string {
@@ -36,6 +39,7 @@ export function storeMyAddress (myAddress: string) {
   store.set(MY_ADDRESS, myAddress)
   storeDidSignIn()
 }
+
 
 export const didSignIn = (): boolean => store.get(DID_SIGN_IN)
 
@@ -167,7 +171,9 @@ export function MyAccountProvider (props: React.PropsWithChildren<{}>) {
   };
   return (
     <MyAccountContext.Provider value={contextValue}>
+      <CartProvider id={address}>
       {props.children}
+      </CartProvider>
     </MyAccountContext.Provider>
   );
 }

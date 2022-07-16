@@ -285,10 +285,10 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.14.6", "@babel/runtime@^7.17.2", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2":
-  version "7.18.3"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.3.tgz#c7b654b57f6f63cf7f8b418ac9ca04408c4579f4"
-  integrity sha512-38Y8f7YUhce/K7RMwTp7m0uCumpv9hZkitCbBClqQIow1qSbCvGkcegKOXpEWCQLfWmevgRiWokZ1GkpfhbZug==
+"@babel/runtime@^7.14.6", "@babel/runtime@^7.17.2":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.6.tgz#6a1ef59f838debd670421f8c7f2cbb8da9751580"
+  integrity sha512-t9wi7/AW6XtKahAe20Yw0/mMljKq0B1r2fPdvaAdV/KPDZewFXdaaa6K7lxmZBZ8FBNpCiAT6iHPmd6QO9bKfQ==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -296,6 +296,13 @@
   version "7.17.9"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.9.tgz#d19fbf802d01a8cb6cf053a64e472d42c434ba72"
   integrity sha512-lSiBBvodq29uShpWGNbgFdKYNiFDo5/HIYsaCEY9ff4sb10x9jizo2+pRrSyF4jKZCXqgzuqBOQKbUm90gQwJg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2":
+  version "7.18.3"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.3.tgz#c7b654b57f6f63cf7f8b418ac9ca04408c4579f4"
+  integrity sha512-38Y8f7YUhce/K7RMwTp7m0uCumpv9hZkitCbBClqQIow1qSbCvGkcegKOXpEWCQLfWmevgRiWokZ1GkpfhbZug==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -372,10 +379,10 @@
     sjcl "1.0.3"
     superagent "^3.4.1"
 
-"@darkpay/dark-api@^0.14.1-5.10":
-  version "0.14.1-5.12"
-  resolved "https://registry.yarnpkg.com/@darkpay/dark-api/-/dark-api-0.14.1-5.12.tgz#25b9e02c6ddecda323b5b1426d8d5c17d905376b"
-  integrity sha512-2CA6BTBbKKQYfmXjCil73uAaxJMa+vUSesFR4Fgc91qjN/B51XTBSb1reV6f8+35DN3m5Tpvs0fQxgbSpDH8Dg==
+"@darkpay/dark-api@^0.14.1-5.13":
+  version "0.14.1-5.13"
+  resolved "https://registry.yarnpkg.com/@darkpay/dark-api/-/dark-api-0.14.1-5.13.tgz#44f28dce56250429711b3fdb60cc49ee4985682d"
+  integrity sha512-53Fgm0jpGP+tF9kk8raoxI64DNJzyG+Qwil3EBGHI8+GKvyKvcrBjvHr9bA5EhmsBEsgFcOZCQn41YUjys/kOw==
   dependencies:
     "@darkpay/dark-utils" "^0.14.15.1"
     "@polkadot/api" "^4.15.1"
@@ -386,10 +393,10 @@
   resolved "https://registry.yarnpkg.com/@darkpay/dark-config/-/dark-config-0.14.1-5.1.tgz#5fc22a7061fcdbbe200afd610c2382dad733acb8"
   integrity sha512-kXrZAYj+8CLVUEyuUh5qNft2Z2B1Gdj7ktqWgaQJ6EDmIM2R1oZrQ1cyikXIwaOJckxCUKyfI9nWGaYx6Kw7Iw==
 
-"@darkpay/dark-types@^0.14.1-5.10":
-  version "0.14.1-5.12"
-  resolved "https://registry.yarnpkg.com/@darkpay/dark-types/-/dark-types-0.14.1-5.12.tgz#21bf315360d80cb5e5d51a486dad406a4572204c"
-  integrity sha512-8rX8VZfBYwtSSOMGnCJ8F5Yt4dvHf31t6JNNne/eE3b+6AiBqXR39yWXxySAOS1j4e/DdDOGDywF001DG55j5w==
+"@darkpay/dark-types@^0.14.1-5.13":
+  version "0.14.1-5.13"
+  resolved "https://registry.yarnpkg.com/@darkpay/dark-types/-/dark-types-0.14.1-5.13.tgz#ec61f5f688ffe22caa6b189575070d658320fe4a"
+  integrity sha512-N80xVYhxj+VeMD2UIlSIGatJ0hqXqnq5prdxTEqKKSQQ+YE78iieVdi+C84J5t9cNRYNtWhGmzsCch+kUREX6w==
   dependencies:
     "@darkpay/dark-utils" "^0.14.15.1"
     cids "^0.7.1"
@@ -3483,9 +3490,9 @@ camelize@^1.0.0:
   integrity sha1-FkpUg+Yw+kMh5a8HAg5TGDGyYJs=
 
 caniuse-lite@^1.0.30001093, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001173, caniuse-lite@^1.0.30001179, caniuse-lite@^1.0.30001286:
-  version "1.0.30001298"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001298.tgz#0e690039f62e91c3ea581673d716890512e7ec52"
-  integrity sha512-AcKqikjMLlvghZL/vfTHorlQsLDhGRalYf1+GmWCf5SCMziSGjRYQW/JEksj14NaYHIR6KIhrFAy0HV5C25UzQ==
+  version "1.0.30001366"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001366.tgz"
+  integrity sha512-yy7XLWCubDobokgzudpkKux8e0UOOnLHE6mlNJBzT3lZJz6s5atSEzjoL+fsCPkI0G8MP5uVdDx1ur/fXEWkZA==
 
 canvas-renderer@~2.2.0:
   version "2.2.0"
@@ -8404,9 +8411,9 @@ node-gyp-build@^4.2.0:
   integrity sha512-iWjXZvmboq0ja1pUGULQBexmxq8CV4xBhX7VDOTbL7ZR4FOowwY/VOtRxBN/yKxmdGoIp4j5ysNT4u3S2pDQ3Q==
 
 node-gyp-build@^4.3.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.4.0.tgz#42e99687ce87ddeaf3a10b99dc06abc11021f3f4"
-  integrity sha512-amJnQCcgtRVw9SvoebO3BKGESClrfXGCUTX9hSn1OuGQTQBOZmVd0Z0OlecpuRksKvbsUqALE8jls/ErClAPuQ==
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.5.0.tgz#7a64eefa0b21112f89f58379da128ac177f20e40"
+  integrity sha512-2iGbaQBV+ITgCz76ZEjmhUKAKVf7xfY1sRl4UiKQspfZMH2h06SyhNsnSVy50cwkFQDGLyif6m/6uFXHkOZ6rg==
 
 node-hid@2.1.1:
   version "2.1.1"

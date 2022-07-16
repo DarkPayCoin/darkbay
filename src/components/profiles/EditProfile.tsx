@@ -53,9 +53,9 @@ async function createD4rkPGP(username: string, password: string): Promise<D4rkPG
       format: 'armored' // output key format, defaults to 'armored' (other options: 'binary' or 'object')
   });
 
-  console.log(privateKey);     // '-----BEGIN PGP PRIVATE KEY BLOCK ... '
-  console.log(publicKey);      // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
-  console.log(revocationCertificate); // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
+  // console.log(privateKey);     // '-----BEGIN PGP PRIVATE KEY BLOCK ... '
+  // console.log(publicKey);      // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
+  // console.log(revocationCertificate); // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
 
   let Privbuff = Buffer.from(privateKey, 'utf8')
   let Pubbuff = Buffer.from(publicKey, 'utf8')
@@ -291,6 +291,22 @@ console. log('priv : '+privbase64 + 'pub : '+pubbase64 )
     form.setFieldsValue({ [fieldName('gpg')]: gpg })
   }
 
+
+  const savePkey = (pkey: string, address: AnyAccountId) => {
+  console.log(pkey)
+  const dataStr =
+  'data:text/plain;charset=utf-8,' +
+  encodeURIComponent(JSON.stringify(pkey));
+  const download = document.createElement('a');
+  download.setAttribute('href', dataStr);
+  download.setAttribute('download', 'DARK_pkey_' + address + '.txt');
+  document.body.appendChild(download);
+  download.click();
+  download.remove();
+  }
+
+
+
 //   const crypto = require('crypto');
 
 //   const alice = getNewKeys()
@@ -420,6 +436,7 @@ console. log('priv : '+privbase64 + 'pub : '+pubbase64 )
 <Section>
 <Form.Item
 name={fieldName('gpg')}
+hidden
 label='Dark PubKey'
 >
 <Input placeholder={DarkPubKey} value={DarkPubKey} readOnly />
@@ -427,14 +444,18 @@ label='Dark PubKey'
 
 <Section className="DarkPrivBox">
 <Alert
-      message="Save your password and key"
+      message="Save your private key before saving your profile"
       description="Your keys are generated client-side (in your browser) and there is no way to recover if you loose them."
       type="warning"
       showIcon
       closable={false}
     />
-     <Text code>{DarkPrivKey}</Text>
-  
+<Section className="d4rk-swap-desc spaced-top padded-top">
+    <Button onClick={() => savePkey(DarkPrivKey, address)}
+      >Save my key
+    </Button>
+     {/* <Text code>{DarkPrivKey}</Text> */}
+     </Section>
   
   </Section>
 

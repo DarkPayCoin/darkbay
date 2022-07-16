@@ -8,7 +8,7 @@ import { SubstrateProvider, SubstrateWebConsole } from '../components/substrate'
 import { ResponsiveSizeProvider } from 'src/components/responsive';
 // import { KusamaProvider } from 'src/components/kusama/KusamaContext';
 // import { kusamaUrl } from 'src/components/utils/env';
-import { CartProvider } from "react-use-cart";
+// import { CartProvider } from "react-use-cart";
 import { CookiesProvider } from 'react-cookie';
 import { QueryClient, QueryClientProvider } from "react-query";
 // const queryClient = new QueryClient();
@@ -23,6 +23,7 @@ const queryClient = new QueryClient({
   },
 });
 
+
 const ClientLayout: React.FunctionComponent = ({ children }) => {
   return (
     <ResponsiveSizeProvider >
@@ -33,7 +34,7 @@ const ClientLayout: React.FunctionComponent = ({ children }) => {
           <DarkdotApiProvider>
             <MyAccountProvider>
               <AuthProvider>
-                <CartProvider>
+                {/* <CartProvider> */}
                  <CookiesProvider>
                  <QueryClientProvider client={queryClient}>
                  <Navigation>
@@ -41,7 +42,7 @@ const ClientLayout: React.FunctionComponent = ({ children }) => {
                  </Navigation>
                  </QueryClientProvider>
                  </CookiesProvider>
-                </CartProvider>
+                {/* </CartProvider> */}
               </AuthProvider>
             </MyAccountProvider>
           </DarkdotApiProvider>
